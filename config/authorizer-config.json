@@ -1,0 +1,40 @@
+{
+    "info": {
+        "contact": {
+            "email": "support@aserto.com",
+            "name": "API Support",
+            "url": "https://aserto.com/support"
+        },
+        "description": "Authorizer service",
+        "license": {
+            "name": "Apache 2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "termsOfService": "https://aserto.com/terms/",
+        "title": "Authorizer",
+        "version": "x.y.z"
+    },
+    "externalDocs": {
+        "description": "API documentation",
+        "url": "https://docs.aserto.com"
+    },
+    "servers": [
+        {
+            "description": "Local authorizer service using Topaz",
+            "url": "https://localhost:{port}",
+            "variables": {
+                "port": {
+                    "default": "8383",
+                    "enum": [
+                        "8383"
+                    ]
+                }
+            }
+        }
+    ],
+    "tags": [
+        {
+            "name": "Authorizer"
+        }
+    ]
+}
