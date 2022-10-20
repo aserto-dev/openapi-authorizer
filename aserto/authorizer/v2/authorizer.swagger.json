@@ -49,7 +49,7 @@
           }
         ],
         "tags": [
-          "authorizer"
+          "Authorizer"
         ],
         "security": [
           {
@@ -88,7 +88,7 @@
           }
         ],
         "tags": [
-          "authorizer"
+          "Authorizer"
         ],
         "security": [
           {
@@ -127,7 +127,7 @@
           }
         ],
         "tags": [
-          "authorizer"
+          "Authorizer"
         ],
         "security": [
           {
@@ -166,7 +166,7 @@
           }
         ],
         "tags": [
-          "authorizer"
+          "Authorizer"
         ],
         "security": [
           {
@@ -225,10 +225,22 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "policy_instance.name",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "policy_instance.instance_label",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
-          "authorizer"
+          "Policy"
         ],
         "security": [
           {
@@ -268,10 +280,22 @@
             "in": "query",
             "required": false,
             "type": "string"
+          },
+          {
+            "name": "policy_instance.name",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "policy_instance.instance_label",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
-          "authorizer"
+          "Policy"
         ],
         "security": [
           {
@@ -318,18 +342,15 @@
         },
         "ast": {
           "type": "object"
+        },
+        "package_root": {
+          "type": "string"
         }
       }
     },
     "apiPolicyContext": {
       "type": "object",
       "properties": {
-        "name": {
-          "type": "string"
-        },
-        "instance_label": {
-          "type": "string"
-        },
         "path": {
           "type": "string"
         },
@@ -338,6 +359,17 @@
           "items": {
             "type": "string"
           }
+        }
+      }
+    },
+    "apiPolicyInstance": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "instance_label": {
+          "type": "string"
         }
       }
     },
@@ -411,6 +443,9 @@
         },
         "resource_context": {
           "type": "object"
+        },
+        "policy_instance": {
+          "$ref": "#/definitions/apiPolicyInstance"
         }
       }
     },
@@ -470,6 +505,9 @@
         },
         "resource_context": {
           "type": "object"
+        },
+        "policy_instance": {
+          "$ref": "#/definitions/apiPolicyInstance"
         }
       }
     },
@@ -523,6 +561,9 @@
         },
         "resource_context": {
           "type": "object"
+        },
+        "policy_instance": {
+          "$ref": "#/definitions/apiPolicyInstance"
         }
       }
     },
@@ -594,6 +635,9 @@
         },
         "resource_context": {
           "type": "object"
+        },
+        "policy_instance": {
+          "$ref": "#/definitions/apiPolicyInstance"
         }
       }
     },
