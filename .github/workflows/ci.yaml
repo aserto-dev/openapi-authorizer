@@ -74,7 +74,7 @@ jobs:
         add: 'aserto'
 
     - name: Dispatch to aserto-dev/ts-authorizer if a change was committed
-      if: steps.commit_changes.outputs.committed && github.event_name == 'workflow_dispatch'
+      if: steps.commit_changes.outputs.committed == 'true' && github.event_name == 'workflow_dispatch'
       uses: benc-uk/workflow-dispatch@v1
       with:
         inputs: '{"OPENAPI_SHA": "${{ steps.commit_changes.outputs.commit_sha }}", "PROTO_REF": "${{ github.event.inputs.proto_ref }}"}'
