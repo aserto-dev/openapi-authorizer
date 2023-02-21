@@ -32,6 +32,7 @@ jobs:
         token: ${{ secrets.VAULT_TOKEN }}
         secrets: |
           kv/data/github  "SSH_PRIVATE_KEY"     | SSH_PRIVATE_KEY;
+          kv/data/github  "READ_WRITE_TOKEN"    | READ_WRITE_TOKEN;
 
     - name: Checkout
       uses: actions/checkout@v2
