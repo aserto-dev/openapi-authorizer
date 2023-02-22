@@ -71,6 +71,11 @@ components:
             value:
               extensionprops: {}
               type: string
+          package_root:
+            ref: ""
+            value:
+              extensionprops: {}
+              type: string
           raw:
             ref: ""
             value:
@@ -92,17 +97,23 @@ components:
                 value:
                   extensionprops: {}
                   type: string
+          path:
+            ref: ""
+            value:
+              extensionprops: {}
+              type: string
+    apiPolicyInstance:
+      ref: ""
+      value:
+        extensionprops: {}
+        type: object
+        properties:
           instance_label:
             ref: ""
             value:
               extensionprops: {}
               type: string
           name:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: string
-          path:
             ref: ""
             value:
               extensionprops: {}
@@ -277,17 +288,23 @@ components:
                       value:
                         extensionprops: {}
                         type: string
+                path:
+                  ref: ""
+                  value:
+                    extensionprops: {}
+                    type: string
+          policy_instance:
+            ref: '#/components/schemas/apiPolicyInstance'
+            value:
+              extensionprops: {}
+              type: object
+              properties:
                 instance_label:
                   ref: ""
                   value:
                     extensionprops: {}
                     type: string
                 name:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: string
-                path:
                   ref: ""
                   value:
                     extensionprops: {}
@@ -447,17 +464,23 @@ components:
                       value:
                         extensionprops: {}
                         type: string
+                path:
+                  ref: ""
+                  value:
+                    extensionprops: {}
+                    type: string
+          policy_instance:
+            ref: '#/components/schemas/apiPolicyInstance'
+            value:
+              extensionprops: {}
+              type: object
+              properties:
                 instance_label:
                   ref: ""
                   value:
                     extensionprops: {}
                     type: string
                 name:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: string
-                path:
                   ref: ""
                   value:
                     extensionprops: {}
@@ -506,6 +529,11 @@ components:
                     extensionprops: {}
                     type: string
                 package_path:
+                  ref: ""
+                  value:
+                    extensionprops: {}
+                    type: string
+                package_root:
                   ref: ""
                   value:
                     extensionprops: {}
@@ -597,17 +625,23 @@ components:
                       value:
                         extensionprops: {}
                         type: string
+                path:
+                  ref: ""
+                  value:
+                    extensionprops: {}
+                    type: string
+          policy_instance:
+            ref: '#/components/schemas/apiPolicyInstance'
+            value:
+              extensionprops: {}
+              type: object
+              properties:
                 instance_label:
                   ref: ""
                   value:
                     extensionprops: {}
                     type: string
                 name:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: string
-                path:
                   ref: ""
                   value:
                     extensionprops: {}
@@ -672,6 +706,11 @@ components:
                         extensionprops: {}
                         type: string
                     package_path:
+                      ref: ""
+                      value:
+                        extensionprops: {}
+                        type: string
+                    package_root:
                       ref: ""
                       value:
                         extensionprops: {}
@@ -813,17 +852,23 @@ components:
                       value:
                         extensionprops: {}
                         type: string
+                path:
+                  ref: ""
+                  value:
+                    extensionprops: {}
+                    type: string
+          policy_instance:
+            ref: '#/components/schemas/apiPolicyInstance'
+            value:
+              extensionprops: {}
+              type: object
+              properties:
                 instance_label:
                   ref: ""
                   value:
                     extensionprops: {}
                     type: string
                 name:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: string
-                path:
                   ref: ""
                   value:
                     extensionprops: {}
@@ -908,14 +953,14 @@ info:
     extensionprops: {}
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
-  version: v0.0.7
+  version: v0.20.2
 paths:
   /api/v2/authz/compile:
     extensionprops: {}
     post:
       extensionprops: {}
       tags:
-        - authorizer
+        - Authorizer
       summary: Compile (authorized)
       description: Executes a partial query on the loaded policy runtime.
       operationId: authorizer.compile
@@ -1026,17 +1071,23 @@ paths:
                                 value:
                                   extensionprops: {}
                                   type: string
+                          path:
+                            ref: ""
+                            value:
+                              extensionprops: {}
+                              type: string
+                    policy_instance:
+                      ref: '#/components/schemas/apiPolicyInstance'
+                      value:
+                        extensionprops: {}
+                        type: object
+                        properties:
                           instance_label:
                             ref: ""
                             value:
                               extensionprops: {}
                               type: string
                           name:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: string
-                          path:
                             ref: ""
                             value:
                               extensionprops: {}
@@ -1160,7 +1211,7 @@ paths:
     post:
       extensionprops: {}
       tags:
-        - authorizer
+        - Authorizer
       summary: Decision tree
       description: Returns decision tree for given identity context.
       operationId: authorizer.decision_tree
@@ -1239,17 +1290,23 @@ paths:
                                 value:
                                   extensionprops: {}
                                   type: string
+                          path:
+                            ref: ""
+                            value:
+                              extensionprops: {}
+                              type: string
+                    policy_instance:
+                      ref: '#/components/schemas/apiPolicyInstance'
+                      value:
+                        extensionprops: {}
+                        type: object
+                        properties:
                           instance_label:
                             ref: ""
                             value:
                               extensionprops: {}
                               type: string
                           name:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: string
-                          path:
                             ref: ""
                             value:
                               extensionprops: {}
@@ -1338,7 +1395,7 @@ paths:
     post:
       extensionprops: {}
       tags:
-        - authorizer
+        - Authorizer
       summary: Is (authorized)
       description: Determines if identity context is authorized to access the resource guarded by the given policy.
       operationId: authorizer.is
@@ -1401,17 +1458,23 @@ paths:
                                 value:
                                   extensionprops: {}
                                   type: string
+                          path:
+                            ref: ""
+                            value:
+                              extensionprops: {}
+                              type: string
+                    policy_instance:
+                      ref: '#/components/schemas/apiPolicyInstance'
+                      value:
+                        extensionprops: {}
+                        type: object
+                        properties:
                           instance_label:
                             ref: ""
                             value:
                               extensionprops: {}
                               type: string
                           name:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: string
-                          path:
                             ref: ""
                             value:
                               extensionprops: {}
@@ -1511,7 +1574,7 @@ paths:
     post:
       extensionprops: {}
       tags:
-        - authorizer
+        - Authorizer
       summary: Query (authorized)
       description: Executes a rego query on the loaded policy runtime.
       operationId: authorizer.query
@@ -1612,17 +1675,23 @@ paths:
                                 value:
                                   extensionprops: {}
                                   type: string
+                          path:
+                            ref: ""
+                            value:
+                              extensionprops: {}
+                              type: string
+                    policy_instance:
+                      ref: '#/components/schemas/apiPolicyInstance'
+                      value:
+                        extensionprops: {}
+                        type: object
+                        properties:
                           instance_label:
                             ref: ""
                             value:
                               extensionprops: {}
                               type: string
                           name:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: string
-                          path:
                             ref: ""
                             value:
                               extensionprops: {}
@@ -1833,7 +1902,7 @@ paths:
     get:
       extensionprops: {}
       tags:
-        - authorizer
+        - Policy
       summary: List Policies
       description: Lists the policy modules for the policy bundle.
       operationId: policies.list
@@ -1842,6 +1911,26 @@ paths:
           value:
             extensionprops: {}
             name: field_mask
+            in: query
+            schema:
+              ref: ""
+              value:
+                extensionprops: {}
+                type: string
+        - ref: ""
+          value:
+            extensionprops: {}
+            name: policy_instance.name
+            in: query
+            schema:
+              ref: ""
+              value:
+                extensionprops: {}
+                type: string
+        - ref: ""
+          value:
+            extensionprops: {}
+            name: policy_instance.instance_label
             in: query
             schema:
               ref: ""
@@ -1885,6 +1974,11 @@ paths:
                                     extensionprops: {}
                                     type: string
                                 package_path:
+                                  ref: ""
+                                  value:
+                                    extensionprops: {}
+                                    type: string
+                                package_root:
                                   ref: ""
                                   value:
                                     extensionprops: {}
@@ -1948,7 +2042,7 @@ paths:
     get:
       extensionprops: {}
       tags:
-        - authorizer
+        - Policy
       summary: Get Policy
       description: Gets the policy modules for the given module Id.
       operationId: policies.get
@@ -1968,6 +2062,26 @@ paths:
           value:
             extensionprops: {}
             name: field_mask
+            in: query
+            schema:
+              ref: ""
+              value:
+                extensionprops: {}
+                type: string
+        - ref: ""
+          value:
+            extensionprops: {}
+            name: policy_instance.name
+            in: query
+            schema:
+              ref: ""
+              value:
+                extensionprops: {}
+                type: string
+        - ref: ""
+          value:
+            extensionprops: {}
+            name: policy_instance.instance_label
             in: query
             schema:
               ref: ""
@@ -2006,6 +2120,11 @@ paths:
                                 extensionprops: {}
                                 type: string
                             package_path:
+                              ref: ""
+                              value:
+                                extensionprops: {}
+                                type: string
+                            package_root:
                               ref: ""
                               value:
                                 extensionprops: {}

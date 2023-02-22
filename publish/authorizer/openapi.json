@@ -34,6 +34,9 @@
           "package_path": {
             "type": "string"
           },
+          "package_root": {
+            "type": "string"
+          },
           "raw": {
             "type": "string"
           }
@@ -48,13 +51,18 @@
             },
             "type": "array"
           },
+          "path": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "apiPolicyInstance": {
+        "properties": {
           "instance_label": {
             "type": "string"
           },
           "name": {
-            "type": "string"
-          },
-          "path": {
             "type": "string"
           }
         },
@@ -117,6 +125,9 @@
           },
           "policy_context": {
             "$ref": "#/components/schemas/apiPolicyContext"
+          },
+          "policy_instance": {
+            "$ref": "#/components/schemas/apiPolicyInstance"
           },
           "query": {
             "type": "string"
@@ -186,6 +197,9 @@
           "policy_context": {
             "$ref": "#/components/schemas/apiPolicyContext"
           },
+          "policy_instance": {
+            "$ref": "#/components/schemas/apiPolicyInstance"
+          },
           "resource_context": {
             "type": "object"
           }
@@ -238,6 +252,9 @@
           },
           "policy_context": {
             "$ref": "#/components/schemas/apiPolicyContext"
+          },
+          "policy_instance": {
+            "$ref": "#/components/schemas/apiPolicyInstance"
           },
           "resource_context": {
             "type": "object"
@@ -306,6 +323,9 @@
           },
           "policy_context": {
             "$ref": "#/components/schemas/apiPolicyContext"
+          },
+          "policy_instance": {
+            "$ref": "#/components/schemas/apiPolicyInstance"
           },
           "query": {
             "type": "string"
@@ -376,7 +396,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Authorizer",
-    "version": "v0.0.7"
+    "version": "v0.20.2"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -424,7 +444,7 @@
         ],
         "summary": "Compile (authorized)",
         "tags": [
-          "authorizer"
+          "Authorizer"
         ]
       }
     },
@@ -472,7 +492,7 @@
         ],
         "summary": "Decision tree",
         "tags": [
-          "authorizer"
+          "Authorizer"
         ]
       }
     },
@@ -520,7 +540,7 @@
         ],
         "summary": "Is (authorized)",
         "tags": [
-          "authorizer"
+          "Authorizer"
         ]
       }
     },
@@ -568,7 +588,7 @@
         ],
         "summary": "Query (authorized)",
         "tags": [
-          "authorizer"
+          "Authorizer"
         ]
       }
     },
@@ -616,6 +636,20 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "in": "query",
+            "name": "policy_instance.name",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "policy_instance.instance_label",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -647,7 +681,7 @@
         ],
         "summary": "List Policies",
         "tags": [
-          "authorizer"
+          "Policy"
         ]
       }
     },
@@ -667,6 +701,20 @@
           {
             "in": "query",
             "name": "field_mask",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "policy_instance.name",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "policy_instance.instance_label",
             "schema": {
               "type": "string"
             }
@@ -701,7 +749,7 @@
         ],
         "summary": "Get Policy",
         "tags": [
-          "authorizer"
+          "Policy"
         ]
       }
     }

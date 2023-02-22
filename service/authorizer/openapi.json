@@ -36,6 +36,9 @@
         "package_path": {
           "type": "string"
         },
+        "package_root": {
+          "type": "string"
+        },
         "raw": {
           "type": "string"
         }
@@ -50,13 +53,18 @@
           },
           "type": "array"
         },
+        "path": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "apiPolicyInstance": {
+      "properties": {
         "instance_label": {
           "type": "string"
         },
         "name": {
-          "type": "string"
-        },
-        "path": {
           "type": "string"
         }
       },
@@ -119,6 +127,9 @@
         },
         "policy_context": {
           "$ref": "#/definitions/apiPolicyContext"
+        },
+        "policy_instance": {
+          "$ref": "#/definitions/apiPolicyInstance"
         },
         "query": {
           "type": "string"
@@ -188,6 +199,9 @@
         "policy_context": {
           "$ref": "#/definitions/apiPolicyContext"
         },
+        "policy_instance": {
+          "$ref": "#/definitions/apiPolicyInstance"
+        },
         "resource_context": {
           "type": "object"
         }
@@ -240,6 +254,9 @@
         },
         "policy_context": {
           "$ref": "#/definitions/apiPolicyContext"
+        },
+        "policy_instance": {
+          "$ref": "#/definitions/apiPolicyInstance"
         },
         "resource_context": {
           "type": "object"
@@ -308,6 +325,9 @@
         },
         "policy_context": {
           "$ref": "#/definitions/apiPolicyContext"
+        },
+        "policy_instance": {
+          "$ref": "#/definitions/apiPolicyInstance"
         },
         "query": {
           "type": "string"
@@ -393,7 +413,7 @@
         ],
         "summary": "Compile (authorized)",
         "tags": [
-          "authorizer"
+          "Authorizer"
         ]
       }
     },
@@ -432,7 +452,7 @@
         ],
         "summary": "Decision tree",
         "tags": [
-          "authorizer"
+          "Authorizer"
         ]
       }
     },
@@ -471,7 +491,7 @@
         ],
         "summary": "Is (authorized)",
         "tags": [
-          "authorizer"
+          "Authorizer"
         ]
       }
     },
@@ -510,7 +530,7 @@
         ],
         "summary": "Query (authorized)",
         "tags": [
-          "authorizer"
+          "Authorizer"
         ]
       }
     },
@@ -549,6 +569,18 @@
             "name": "field_mask",
             "required": false,
             "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "policy_instance.name",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "policy_instance.instance_label",
+            "required": false,
+            "type": "string"
           }
         ],
         "responses": {
@@ -572,7 +604,7 @@
         ],
         "summary": "List Policies",
         "tags": [
-          "authorizer"
+          "Policy"
         ]
       }
     },
@@ -590,6 +622,18 @@
           {
             "in": "query",
             "name": "field_mask",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "policy_instance.name",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "policy_instance.instance_label",
             "required": false,
             "type": "string"
           }
@@ -615,7 +659,7 @@
         ],
         "summary": "Get Policy",
         "tags": [
-          "authorizer"
+          "Policy"
         ]
       }
     }
