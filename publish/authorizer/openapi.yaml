@@ -2187,6 +2187,9 @@ security:
   - AuthorizerAPIKey: []
 servers:
   - extensionprops: {}
+    url: https://authorizer.prod.aserto.com
+    description: Hosted authorizer service
+  - extensionprops: {}
     url: https://localhost:{port}
     description: Local authorizer service using Topaz
     variables:
