@@ -953,7 +953,7 @@ info:
     extensionprops: {}
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
-  version: v0.20.2
+  version: v0.20.3
 paths:
   /api/v2/authz/compile:
     extensionprops: {}
@@ -1206,6 +1206,7 @@ paths:
                           type: string
       security:
         - AuthorizerAPIKey: []
+          TenantID: []
   /api/v2/authz/decisiontree:
     extensionprops: {}
     post:
@@ -1390,6 +1391,7 @@ paths:
                           type: string
       security:
         - AuthorizerAPIKey: []
+          TenantID: []
   /api/v2/authz/is:
     extensionprops: {}
     post:
@@ -1569,6 +1571,7 @@ paths:
                           type: string
       security:
         - AuthorizerAPIKey: []
+          TenantID: []
   /api/v2/authz/query:
     extensionprops: {}
     post:
@@ -1800,6 +1803,7 @@ paths:
                           type: string
       security:
         - AuthorizerAPIKey: []
+          TenantID: []
   /api/v2/info:
     extensionprops: {}
     get:
@@ -2037,6 +2041,7 @@ paths:
                           type: string
       security:
         - AuthorizerAPIKey: []
+          TenantID: []
   /api/v2/policies/{id}:
     extensionprops: {}
     get:
@@ -2183,8 +2188,10 @@ paths:
                           type: string
       security:
         - AuthorizerAPIKey: []
+          TenantID: []
 security:
   - AuthorizerAPIKey: []
+    TenantID: []
 servers:
   - extensionprops: {}
     url: https://authorizer.prod.aserto.com

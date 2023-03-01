@@ -53,7 +53,8 @@
         ],
         "security": [
           {
-            "AuthorizerAPIKey": []
+            "AuthorizerAPIKey": [],
+            "TenantID": []
           }
         ]
       }
@@ -92,7 +93,8 @@
         ],
         "security": [
           {
-            "AuthorizerAPIKey": []
+            "AuthorizerAPIKey": [],
+            "TenantID": []
           }
         ]
       }
@@ -131,7 +133,8 @@
         ],
         "security": [
           {
-            "AuthorizerAPIKey": []
+            "AuthorizerAPIKey": [],
+            "TenantID": []
           }
         ]
       }
@@ -170,7 +173,8 @@
         ],
         "security": [
           {
-            "AuthorizerAPIKey": []
+            "AuthorizerAPIKey": [],
+            "TenantID": []
           }
         ]
       }
@@ -244,7 +248,8 @@
         ],
         "security": [
           {
-            "AuthorizerAPIKey": []
+            "AuthorizerAPIKey": [],
+            "TenantID": []
           }
         ]
       }
@@ -299,7 +304,8 @@
         ],
         "security": [
           {
-            "AuthorizerAPIKey": []
+            "AuthorizerAPIKey": [],
+            "TenantID": []
           }
         ]
       }
@@ -685,7 +691,8 @@
   },
   "security": [
     {
-      "AuthorizerAPIKey": []
+      "AuthorizerAPIKey": [],
+      "TenantID": []
     }
   ]
 }

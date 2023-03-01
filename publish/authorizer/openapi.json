@@ -396,7 +396,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Authorizer",
-    "version": "v0.20.2"
+    "version": "v0.20.3"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -439,7 +439,8 @@
         },
         "security": [
           {
-            "AuthorizerAPIKey": []
+            "AuthorizerAPIKey": [],
+            "TenantID": []
           }
         ],
         "summary": "Compile (authorized)",
@@ -487,7 +488,8 @@
         },
         "security": [
           {
-            "AuthorizerAPIKey": []
+            "AuthorizerAPIKey": [],
+            "TenantID": []
           }
         ],
         "summary": "Decision tree",
@@ -535,7 +537,8 @@
         },
         "security": [
           {
-            "AuthorizerAPIKey": []
+            "AuthorizerAPIKey": [],
+            "TenantID": []
           }
         ],
         "summary": "Is (authorized)",
@@ -583,7 +586,8 @@
         },
         "security": [
           {
-            "AuthorizerAPIKey": []
+            "AuthorizerAPIKey": [],
+            "TenantID": []
           }
         ],
         "summary": "Query (authorized)",
@@ -676,7 +680,8 @@
         },
         "security": [
           {
-            "AuthorizerAPIKey": []
+            "AuthorizerAPIKey": [],
+            "TenantID": []
           }
         ],
         "summary": "List Policies",
@@ -744,7 +749,8 @@
         },
         "security": [
           {
-            "AuthorizerAPIKey": []
+            "AuthorizerAPIKey": [],
+            "TenantID": []
           }
         ],
         "summary": "Get Policy",
@@ -756,7 +762,8 @@
   },
   "security": [
     {
-      "AuthorizerAPIKey": []
+      "AuthorizerAPIKey": [],
+      "TenantID": []
     }
   ],
   "servers": [
