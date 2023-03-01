@@ -939,6 +939,14 @@ components:
         type: apiKey
         name: authorization
         in: header
+    TenantID:
+      ref: ""
+      value:
+        extensionprops: {}
+        type: apiKey
+        description: Aserto Tenant ID
+        name: aserto-tenant-id
+        in: header
 info:
   extensionprops: {}
   title: Authorizer
@@ -953,7 +961,7 @@ info:
     extensionprops: {}
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
-  version: v0.20.3
+  version: v0.20.4
 paths:
   /api/v2/authz/compile:
     extensionprops: {}

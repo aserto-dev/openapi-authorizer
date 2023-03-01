@@ -687,6 +687,11 @@
       "type": "apiKey",
       "name": "authorization",
       "in": "header"
+    },
+    "TenantID": {
+      "type": "apiKey",
+      "name": "aserto-tenant-id",
+      "in": "header"
     }
   },
   "security": [

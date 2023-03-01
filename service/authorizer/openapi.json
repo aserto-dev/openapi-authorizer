@@ -687,6 +687,11 @@
       "in": "header",
       "name": "authorization",
       "type": "apiKey"
+    },
+    "TenantID": {
+      "in": "header",
+      "name": "aserto-tenant-id",
+      "type": "apiKey"
     }
   },
   "swagger": "2.0",
