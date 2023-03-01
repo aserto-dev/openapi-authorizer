@@ -20,6 +20,10 @@
     },
     "servers": [
         {
+            "description": "Hosted authorizer service",
+            "url": "https://authorizer.prod.aserto.com"
+        },
+        {
             "description": "Local authorizer service using Topaz",
             "url": "https://localhost:{port}",
             "variables": {
