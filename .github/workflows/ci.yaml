@@ -85,8 +85,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     needs: build
-    # if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
-    if: true == false #TODO: figure out how we release this.
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
     steps:
       - name: Read Configuration
         uses: hashicorp/vault-action@v2.4.1
@@ -97,7 +96,6 @@ jobs:
           secrets: |
             kv/data/readme  "README_VERSION_API_KEY"       | README_VERSION_API_KEY;
             kv/data/readme  "AUTHORIZER_API_DEFINITION_ID" | AUTHORIZER_API_DEFINITION_ID;
-            kv/data/readme  "TENANT_API_DEFINITION_ID"     | TENANT_API_DEFINITION_ID;
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -128,9 +126,6 @@ jobs:
 
           echo "Publish authorizer API spec"
           npx rdme openapi ./publish/authorizer/openapi.json --key ${{ steps.vault.outputs.README_VERSION_API_KEY }} --id ${{ steps.vault.outputs.AUTHORIZER_API_DEFINITION_ID }}
-
-          echo "Publish tenant API spec"
-          npx rdme openapi ./publish/tenant/openapi.json --key ${{ steps.vault.outputs.README_VERSION_API_KEY }} --id ${{ steps.vault.outputs.TENANT_API_DEFINITION_ID }}
 
           echo "Update API spec version"
           npx rdme versions:update --version=$LATEST_READMEIO_VERSION --key ${{ steps.vault.outputs.README_VERSION_API_KEY }} --isPublic true --main true --beta false <<< ${{ env.RELEASE_VERSION }}
