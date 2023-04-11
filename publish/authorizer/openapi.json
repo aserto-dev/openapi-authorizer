@@ -402,7 +402,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Authorizer",
-    "version": "v0.20.4"
+    "version": "v0.20.5"
   },
   "openapi": "3.0.3",
   "paths": {
