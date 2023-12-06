@@ -413,7 +413,7 @@
             "TenantID": []
           }
         ],
-        "summary": "Compile (authorized)",
+        "summary": "Compile",
         "tags": [
           "Authorizer"
         ]
@@ -533,7 +533,7 @@
             "TenantID": []
           }
         ],
-        "summary": "Query (authorized)",
+        "summary": "Query",
         "tags": [
           "Authorizer"
         ]

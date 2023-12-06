@@ -973,7 +973,7 @@ info:
     extensionprops: {}
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
-  version: v0.20.6
+  version: v0.20.7
 paths:
   /api/v2/authz/compile:
     extensionprops: {}
@@ -981,7 +981,7 @@ paths:
       extensionprops: {}
       tags:
         - Authorizer
-      summary: Compile (authorized)
+      summary: Compile
       description: Executes a partial query on the loaded policy runtime.
       operationId: authorizer.compile
       requestBody:
@@ -1604,7 +1604,7 @@ paths:
       extensionprops: {}
       tags:
         - Authorizer
-      summary: Query (authorized)
+      summary: Query
       description: Executes a rego query on the loaded policy runtime.
       operationId: authorizer.query
       requestBody:

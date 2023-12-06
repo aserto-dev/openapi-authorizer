@@ -403,7 +403,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Authorizer",
-    "version": "v0.20.6"
+    "version": "v0.20.7"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -450,7 +450,7 @@
             "TenantID": []
           }
         ],
-        "summary": "Compile (authorized)",
+        "summary": "Compile",
         "tags": [
           "Authorizer"
         ]
@@ -597,7 +597,7 @@
             "TenantID": []
           }
         ],
-        "summary": "Query (authorized)",
+        "summary": "Query",
         "tags": [
           "Authorizer"
         ]

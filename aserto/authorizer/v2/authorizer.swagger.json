@@ -21,7 +21,7 @@
   "paths": {
     "/api/v2/authz/compile": {
       "post": {
-        "summary": "Compile (authorized)",
+        "summary": "Compile",
         "description": "Executes a partial query on the loaded policy runtime.",
         "operationId": "authorizer.compile",
         "responses": {
@@ -141,7 +141,7 @@
     },
     "/api/v2/authz/query": {
       "post": {
-        "summary": "Query (authorized)",
+        "summary": "Query",
         "description": "Executes a rego query on the loaded policy runtime.",
         "operationId": "authorizer.query",
         "responses": {
