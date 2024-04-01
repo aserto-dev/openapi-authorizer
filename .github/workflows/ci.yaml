@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Read Configuration
-      uses: hashicorp/vault-action@v2.4.1
+      uses: hashicorp/vault-action@v3
       id: vault
       with:
         url: ${{ env.VAULT_ADDR }}
@@ -35,12 +35,12 @@ jobs:
           kv/data/github  "READ_WRITE_TOKEN"    | READ_WRITE_TOKEN;
 
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         fetch-depth: 0
 
     - name: Setup Go
-      uses: actions/setup-go@v2
+      uses: actions/setup-go@v5
       with:
         go-version: ${{ env.GO_VERSION }}
 
@@ -88,44 +88,19 @@ jobs:
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
     steps:
       - name: Read Configuration
-        uses: hashicorp/vault-action@v2.4.1
+        uses: hashicorp/vault-action@v3
         id: vault
         with:
           url: ${{ env.VAULT_ADDR }}
           token: ${{ secrets.VAULT_TOKEN }}
           secrets: |
-            kv/data/readme  "README_VERSION_API_KEY"       | README_VERSION_API_KEY;
+            kv/data/readme  "README_OAS_AUTHORIZER_KEY"    | README_OAS_AUTHORIZER_KEY;
             kv/data/readme  "AUTHORIZER_API_DEFINITION_ID" | AUTHORIZER_API_DEFINITION_ID;
+
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - name: Set env
-        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-
-      - name: Use Node.js 18
-        uses: actions/setup-node@v3
+      - name: Publish to readme.io
+        uses: readmeio/rdme@v8
         with:
-          node-version: 18
-
-      - name: Update API spec version
-        id: latest_readmeio_version
-        shell: bash
-        run: |
-          echo "Install rdme"
-          npm install rdme@7.2.0
-
-          echo "Npm fund"
-          npm fund
-          echo "Get versions"
-          LATEST_READMEIO_VERSION=$(curl -X GET \
-            https://dash.readme.io/api/v1/version \
-            -u ${{ steps.vault.outputs.README_VERSION_API_KEY }}:)
-          echo "Compute latest versions"
-          LATEST_READMEIO_VERSION=$(echo "$LATEST_READMEIO_VERSION" | jq -r 'sort_by(.createdAt)[-1].version')
-          echo "$LATEST_READMEIO_VERSION"
-
-          echo "Publish authorizer API spec"
-          npx rdme openapi ./publish/authorizer/openapi.json --key ${{ steps.vault.outputs.README_VERSION_API_KEY }} --id ${{ steps.vault.outputs.AUTHORIZER_API_DEFINITION_ID }}
-
-          echo "Update API spec version"
-          npx rdme versions:update --version=$LATEST_READMEIO_VERSION --key ${{ steps.vault.outputs.README_VERSION_API_KEY }} --isPublic true --main true --beta false <<< ${{ env.RELEASE_VERSION }}
+          rdme: openapi ./publish/directory/openapi.json --key=${{ stepa.vault.outputs.README_OAS_AUTHORIZER_KEY }} --id ${{ steps.vault.outputs.AUTHORIZER_API_DEFINITION_ID }}
