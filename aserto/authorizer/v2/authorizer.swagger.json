@@ -232,12 +232,14 @@
           },
           {
             "name": "policy_instance.name",
+            "description": "policy name",
             "in": "query",
             "required": false,
             "type": "string"
           },
           {
             "name": "policy_instance.instance_label",
+            "description": "label identifying the instance of the policy",
             "in": "query",
             "required": false,
             "type": "string"
@@ -278,7 +280,8 @@
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "pattern": "[^/]+/.+"
           },
           {
             "name": "field_mask",
@@ -288,12 +291,14 @@
           },
           {
             "name": "policy_instance.name",
+            "description": "policy name",
             "in": "query",
             "required": false,
             "type": "string"
           },
           {
             "name": "policy_instance.instance_label",
+            "description": "label identifying the instance of the policy",
             "in": "query",
             "required": false,
             "type": "string"
@@ -347,9 +352,7 @@
         "package_path": {
           "type": "string"
         },
-        "ast": {
-          "type": "object"
-        },
+        "ast": {},
         "package_root": {
           "type": "string"
         }
@@ -359,13 +362,15 @@
       "type": "object",
       "properties": {
         "path": {
-          "type": "string"
+          "type": "string",
+          "title": "policy path aka package name"
         },
         "decisions": {
           "type": "array",
           "items": {
             "type": "string"
-          }
+          },
+          "title": "list (1..N) of policy decisions (aka rules)"
         }
       }
     },
@@ -373,24 +378,23 @@
       "type": "object",
       "properties": {
         "name": {
-          "type": "string"
+          "type": "string",
+          "title": "policy name"
         },
         "instance_label": {
-          "type": "string"
+          "type": "string",
+          "title": "label identifying the instance of the policy"
         }
       }
     },
     "protobufAny": {
       "type": "object",
       "properties": {
-        "type_url": {
+        "@type": {
           "type": "string"
-        },
-        "value": {
-          "type": "string",
-          "format": "byte"
         }
-      }
+      },
+      "additionalProperties": {}
     },
     "protobufNullValue": {
       "type": "string",
@@ -413,6 +417,7 @@
         "details": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/protobufAny"
           }
         }
@@ -580,6 +585,7 @@
         "decisions": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/v2Decision"
           }
         }
@@ -591,6 +597,7 @@
         "result": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/apiModule"
           }
         }
@@ -603,22 +610,27 @@
         "PATH_SEPARATOR_DOT",
         "PATH_SEPARATOR_SLASH"
       ],
-      "default": "PATH_SEPARATOR_UNKNOWN"
+      "default": "PATH_SEPARATOR_UNKNOWN",
+      "title": "- PATH_SEPARATOR_UNKNOWN: Value not set.\n - PATH_SEPARATOR_DOT: Dot \".\" path separator\n - PATH_SEPARATOR_SLASH: Slash \"/\" path separtor"
     },
     "v2QueryOptions": {
       "type": "object",
       "properties": {
         "metrics": {
-          "type": "boolean"
+          "type": "boolean",
+          "title": "default false"
         },
         "instrument": {
-          "type": "boolean"
+          "type": "boolean",
+          "title": "default false"
         },
         "trace": {
-          "$ref": "#/definitions/v2TraceLevel"
+          "$ref": "#/definitions/v2TraceLevel",
+          "title": "default ExplainOffV1"
         },
         "trace_summary": {
-          "type": "boolean"
+          "type": "boolean",
+          "title": "default false"
         }
       }
     },
@@ -680,7 +692,8 @@
         "TRACE_LEVEL_NOTES",
         "TRACE_LEVEL_FAILS"
       ],
-      "default": "TRACE_LEVEL_UNKNOWN"
+      "default": "TRACE_LEVEL_UNKNOWN",
+      "title": "- TRACE_LEVEL_UNKNOWN: Value not set.\n - TRACE_LEVEL_OFF: ExplainOffV1   ExplainModeV1 = \"off\"\n - TRACE_LEVEL_FULL: ExplainFullV1  ExplainModeV1 = \"full\"\n - TRACE_LEVEL_NOTES: ExplainNotesV1 ExplainModeV1 = \"notes\"\n - TRACE_LEVEL_FAILS: ExplainFailsV1 ExplainModeV1 = \"fails\""
     }
   },
   "securityDefinitions": {

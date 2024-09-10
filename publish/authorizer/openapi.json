@@ -26,9 +26,7 @@
       },
       "apiModule": {
         "properties": {
-          "ast": {
-            "type": "object"
-          },
+          "ast": {},
           "id": {
             "type": "string"
           },
@@ -50,9 +48,11 @@
             "items": {
               "type": "string"
             },
+            "title": "list (1..N) of policy decisions (aka rules)",
             "type": "array"
           },
           "path": {
+            "title": "policy path aka package name",
             "type": "string"
           }
         },
@@ -61,21 +61,20 @@
       "apiPolicyInstance": {
         "properties": {
           "instance_label": {
+            "title": "label identifying the instance of the policy",
             "type": "string"
           },
           "name": {
+            "title": "policy name",
             "type": "string"
           }
         },
         "type": "object"
       },
       "protobufAny": {
+        "additionalProperties": {},
         "properties": {
-          "type_url": {
-            "type": "string"
-          },
-          "value": {
-            "format": "byte",
+          "@type": {
             "type": "string"
           }
         },
@@ -292,20 +291,24 @@
           "PATH_SEPARATOR_DOT",
           "PATH_SEPARATOR_SLASH"
         ],
+        "title": "- PATH_SEPARATOR_UNKNOWN: Value not set.\n - PATH_SEPARATOR_DOT: Dot \".\" path separator\n - PATH_SEPARATOR_SLASH: Slash \"/\" path separtor",
         "type": "string"
       },
       "v2QueryOptions": {
         "properties": {
           "instrument": {
+            "title": "default false",
             "type": "boolean"
           },
           "metrics": {
+            "title": "default false",
             "type": "boolean"
           },
           "trace": {
             "$ref": "#/components/schemas/v2TraceLevel"
           },
           "trace_summary": {
+            "title": "default false",
             "type": "boolean"
           }
         },
@@ -369,6 +372,7 @@
           "TRACE_LEVEL_NOTES",
           "TRACE_LEVEL_FAILS"
         ],
+        "title": "- TRACE_LEVEL_UNKNOWN: Value not set.\n - TRACE_LEVEL_OFF: ExplainOffV1   ExplainModeV1 = \"off\"\n - TRACE_LEVEL_FULL: ExplainFullV1  ExplainModeV1 = \"full\"\n - TRACE_LEVEL_NOTES: ExplainNotesV1 ExplainModeV1 = \"notes\"\n - TRACE_LEVEL_FAILS: ExplainFailsV1 ExplainModeV1 = \"fails\"",
         "type": "string"
       }
     },
@@ -403,7 +407,7 @@
     },
     "termsOfService": "https://aserto.com/terms/",
     "title": "Authorizer",
-    "version": "v0.20.7"
+    "version": "v0.20.10"
   },
   "openapi": "3.0.3",
   "paths": {
@@ -649,6 +653,7 @@
             }
           },
           {
+            "description": "policy name",
             "in": "query",
             "name": "policy_instance.name",
             "schema": {
@@ -656,6 +661,7 @@
             }
           },
           {
+            "description": "label identifying the instance of the policy",
             "in": "query",
             "name": "policy_instance.instance_label",
             "schema": {
@@ -707,6 +713,7 @@
             "name": "id",
             "required": true,
             "schema": {
+              "pattern": "[^/]+/.+",
               "type": "string"
             }
           },
@@ -718,6 +725,7 @@
             }
           },
           {
+            "description": "policy name",
             "in": "query",
             "name": "policy_instance.name",
             "schema": {
@@ -725,6 +733,7 @@
             }
           },
           {
+            "description": "label identifying the instance of the policy",
             "in": "query",
             "name": "policy_instance.instance_label",
             "schema": {

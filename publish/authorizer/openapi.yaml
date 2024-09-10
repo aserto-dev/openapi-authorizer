@@ -64,7 +64,6 @@ components:
             ref: ""
             value:
               extensionprops: {}
-              type: object
           id:
             ref: ""
             value:
@@ -96,6 +95,7 @@ components:
             value:
               extensionprops: {}
               type: array
+              title: list (1..N) of policy decisions (aka rules)
               items:
                 ref: ""
                 value:
@@ -106,6 +106,7 @@ components:
             value:
               extensionprops: {}
               type: string
+              title: policy path aka package name
     apiPolicyInstance:
       ref: ""
       value:
@@ -117,28 +118,24 @@ components:
             value:
               extensionprops: {}
               type: string
+              title: label identifying the instance of the policy
           name:
             ref: ""
             value:
               extensionprops: {}
               type: string
+              title: policy name
     protobufAny:
       ref: ""
       value:
         extensionprops: {}
         type: object
         properties:
-          type_url:
+          '@type':
             ref: ""
             value:
               extensionprops: {}
               type: string
-          value:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: string
-              format: byte
     protobufNullValue:
       ref: ""
       value:
@@ -177,17 +174,11 @@ components:
                   extensionprops: {}
                   type: object
                   properties:
-                    type_url:
+                    '@type':
                       ref: ""
                       value:
                         extensionprops: {}
                         type: string
-                    value:
-                      ref: ""
-                      value:
-                        extensionprops: {}
-                        type: string
-                        format: byte
           message:
             ref: ""
             value:
@@ -256,16 +247,24 @@ components:
                   value:
                     extensionprops: {}
                     type: boolean
+                    title: default false
                 metrics:
                   ref: ""
                   value:
                     extensionprops: {}
                     type: boolean
+                    title: default false
                 trace:
                   ref: '#/components/schemas/v2TraceLevel'
                   value:
                     extensionprops: {}
                     type: string
+                    title: |-
+                      - TRACE_LEVEL_UNKNOWN: Value not set.
+                       - TRACE_LEVEL_OFF: ExplainOffV1   ExplainModeV1 = "off"
+                       - TRACE_LEVEL_FULL: ExplainFullV1  ExplainModeV1 = "full"
+                       - TRACE_LEVEL_NOTES: ExplainNotesV1 ExplainModeV1 = "notes"
+                       - TRACE_LEVEL_FAILS: ExplainFailsV1 ExplainModeV1 = "fails"
                     enum:
                       - TRACE_LEVEL_UNKNOWN
                       - TRACE_LEVEL_OFF
@@ -278,6 +277,7 @@ components:
                   value:
                     extensionprops: {}
                     type: boolean
+                    title: default false
           policy_context:
             ref: '#/components/schemas/apiPolicyContext'
             value:
@@ -289,6 +289,7 @@ components:
                   value:
                     extensionprops: {}
                     type: array
+                    title: list (1..N) of policy decisions (aka rules)
                     items:
                       ref: ""
                       value:
@@ -299,6 +300,7 @@ components:
                   value:
                     extensionprops: {}
                     type: string
+                    title: policy path aka package name
           policy_instance:
             ref: '#/components/schemas/apiPolicyInstance'
             value:
@@ -310,11 +312,13 @@ components:
                   value:
                     extensionprops: {}
                     type: string
+                    title: label identifying the instance of the policy
                 name:
                   ref: ""
                   value:
                     extensionprops: {}
                     type: string
+                    title: policy name
           query:
             ref: ""
             value:
@@ -398,6 +402,10 @@ components:
             value:
               extensionprops: {}
               type: string
+              title: |-
+                - PATH_SEPARATOR_UNKNOWN: Value not set.
+                 - PATH_SEPARATOR_DOT: Dot "." path separator
+                 - PATH_SEPARATOR_SLASH: Slash "/" path separtor
               enum:
                 - PATH_SEPARATOR_UNKNOWN
                 - PATH_SEPARATOR_DOT
@@ -451,6 +459,10 @@ components:
                   value:
                     extensionprops: {}
                     type: string
+                    title: |-
+                      - PATH_SEPARATOR_UNKNOWN: Value not set.
+                       - PATH_SEPARATOR_DOT: Dot "." path separator
+                       - PATH_SEPARATOR_SLASH: Slash "/" path separtor
                     enum:
                       - PATH_SEPARATOR_UNKNOWN
                       - PATH_SEPARATOR_DOT
@@ -467,6 +479,7 @@ components:
                   value:
                     extensionprops: {}
                     type: array
+                    title: list (1..N) of policy decisions (aka rules)
                     items:
                       ref: ""
                       value:
@@ -477,6 +490,7 @@ components:
                   value:
                     extensionprops: {}
                     type: string
+                    title: policy path aka package name
           policy_instance:
             ref: '#/components/schemas/apiPolicyInstance'
             value:
@@ -488,11 +502,13 @@ components:
                   value:
                     extensionprops: {}
                     type: string
+                    title: label identifying the instance of the policy
                 name:
                   ref: ""
                   value:
                     extensionprops: {}
                     type: string
+                    title: policy name
           resource_context:
             ref: ""
             value:
@@ -530,7 +546,6 @@ components:
                   ref: ""
                   value:
                     extensionprops: {}
-                    type: object
                 id:
                   ref: ""
                   value:
@@ -630,6 +645,7 @@ components:
                   value:
                     extensionprops: {}
                     type: array
+                    title: list (1..N) of policy decisions (aka rules)
                     items:
                       ref: ""
                       value:
@@ -640,6 +656,7 @@ components:
                   value:
                     extensionprops: {}
                     type: string
+                    title: policy path aka package name
           policy_instance:
             ref: '#/components/schemas/apiPolicyInstance'
             value:
@@ -651,11 +668,13 @@ components:
                   value:
                     extensionprops: {}
                     type: string
+                    title: label identifying the instance of the policy
                 name:
                   ref: ""
                   value:
                     extensionprops: {}
                     type: string
+                    title: policy name
           resource_context:
             ref: ""
             value:
@@ -709,7 +728,6 @@ components:
                       ref: ""
                       value:
                         extensionprops: {}
-                        type: object
                     id:
                       ref: ""
                       value:
@@ -735,6 +753,10 @@ components:
       value:
         extensionprops: {}
         type: string
+        title: |-
+          - PATH_SEPARATOR_UNKNOWN: Value not set.
+           - PATH_SEPARATOR_DOT: Dot "." path separator
+           - PATH_SEPARATOR_SLASH: Slash "/" path separtor
         enum:
           - PATH_SEPARATOR_UNKNOWN
           - PATH_SEPARATOR_DOT
@@ -751,16 +773,24 @@ components:
             value:
               extensionprops: {}
               type: boolean
+              title: default false
           metrics:
             ref: ""
             value:
               extensionprops: {}
               type: boolean
+              title: default false
           trace:
             ref: '#/components/schemas/v2TraceLevel'
             value:
               extensionprops: {}
               type: string
+              title: |-
+                - TRACE_LEVEL_UNKNOWN: Value not set.
+                 - TRACE_LEVEL_OFF: ExplainOffV1   ExplainModeV1 = "off"
+                 - TRACE_LEVEL_FULL: ExplainFullV1  ExplainModeV1 = "full"
+                 - TRACE_LEVEL_NOTES: ExplainNotesV1 ExplainModeV1 = "notes"
+                 - TRACE_LEVEL_FAILS: ExplainFailsV1 ExplainModeV1 = "fails"
               enum:
                 - TRACE_LEVEL_UNKNOWN
                 - TRACE_LEVEL_OFF
@@ -773,6 +803,7 @@ components:
             value:
               extensionprops: {}
               type: boolean
+              title: default false
     v2QueryRequest:
       ref: ""
       value:
@@ -826,16 +857,24 @@ components:
                   value:
                     extensionprops: {}
                     type: boolean
+                    title: default false
                 metrics:
                   ref: ""
                   value:
                     extensionprops: {}
                     type: boolean
+                    title: default false
                 trace:
                   ref: '#/components/schemas/v2TraceLevel'
                   value:
                     extensionprops: {}
                     type: string
+                    title: |-
+                      - TRACE_LEVEL_UNKNOWN: Value not set.
+                       - TRACE_LEVEL_OFF: ExplainOffV1   ExplainModeV1 = "off"
+                       - TRACE_LEVEL_FULL: ExplainFullV1  ExplainModeV1 = "full"
+                       - TRACE_LEVEL_NOTES: ExplainNotesV1 ExplainModeV1 = "notes"
+                       - TRACE_LEVEL_FAILS: ExplainFailsV1 ExplainModeV1 = "fails"
                     enum:
                       - TRACE_LEVEL_UNKNOWN
                       - TRACE_LEVEL_OFF
@@ -848,6 +887,7 @@ components:
                   value:
                     extensionprops: {}
                     type: boolean
+                    title: default false
           policy_context:
             ref: '#/components/schemas/apiPolicyContext'
             value:
@@ -859,6 +899,7 @@ components:
                   value:
                     extensionprops: {}
                     type: array
+                    title: list (1..N) of policy decisions (aka rules)
                     items:
                       ref: ""
                       value:
@@ -869,6 +910,7 @@ components:
                   value:
                     extensionprops: {}
                     type: string
+                    title: policy path aka package name
           policy_instance:
             ref: '#/components/schemas/apiPolicyInstance'
             value:
@@ -880,11 +922,13 @@ components:
                   value:
                     extensionprops: {}
                     type: string
+                    title: label identifying the instance of the policy
                 name:
                   ref: ""
                   value:
                     extensionprops: {}
                     type: string
+                    title: policy name
           query:
             ref: ""
             value:
@@ -936,6 +980,12 @@ components:
       value:
         extensionprops: {}
         type: string
+        title: |-
+          - TRACE_LEVEL_UNKNOWN: Value not set.
+           - TRACE_LEVEL_OFF: ExplainOffV1   ExplainModeV1 = "off"
+           - TRACE_LEVEL_FULL: ExplainFullV1  ExplainModeV1 = "full"
+           - TRACE_LEVEL_NOTES: ExplainNotesV1 ExplainModeV1 = "notes"
+           - TRACE_LEVEL_FAILS: ExplainFailsV1 ExplainModeV1 = "fails"
         enum:
           - TRACE_LEVEL_UNKNOWN
           - TRACE_LEVEL_OFF
@@ -973,7 +1023,7 @@ info:
     extensionprops: {}
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
-  version: v0.20.7
+  version: v0.20.10
 paths:
   /api/v2/authz/compile:
     extensionprops: {}
@@ -1055,16 +1105,24 @@ paths:
                             value:
                               extensionprops: {}
                               type: boolean
+                              title: default false
                           metrics:
                             ref: ""
                             value:
                               extensionprops: {}
                               type: boolean
+                              title: default false
                           trace:
                             ref: '#/components/schemas/v2TraceLevel'
                             value:
                               extensionprops: {}
                               type: string
+                              title: |-
+                                - TRACE_LEVEL_UNKNOWN: Value not set.
+                                 - TRACE_LEVEL_OFF: ExplainOffV1   ExplainModeV1 = "off"
+                                 - TRACE_LEVEL_FULL: ExplainFullV1  ExplainModeV1 = "full"
+                                 - TRACE_LEVEL_NOTES: ExplainNotesV1 ExplainModeV1 = "notes"
+                                 - TRACE_LEVEL_FAILS: ExplainFailsV1 ExplainModeV1 = "fails"
                               enum:
                                 - TRACE_LEVEL_UNKNOWN
                                 - TRACE_LEVEL_OFF
@@ -1077,6 +1135,7 @@ paths:
                             value:
                               extensionprops: {}
                               type: boolean
+                              title: default false
                     policy_context:
                       ref: '#/components/schemas/apiPolicyContext'
                       value:
@@ -1088,6 +1147,7 @@ paths:
                             value:
                               extensionprops: {}
                               type: array
+                              title: list (1..N) of policy decisions (aka rules)
                               items:
                                 ref: ""
                                 value:
@@ -1098,6 +1158,7 @@ paths:
                             value:
                               extensionprops: {}
                               type: string
+                              title: policy path aka package name
                     policy_instance:
                       ref: '#/components/schemas/apiPolicyInstance'
                       value:
@@ -1109,11 +1170,13 @@ paths:
                             value:
                               extensionprops: {}
                               type: string
+                              title: label identifying the instance of the policy
                           name:
                             ref: ""
                             value:
                               extensionprops: {}
                               type: string
+                              title: policy name
                     query:
                       ref: ""
                       value:
@@ -1210,17 +1273,11 @@ paths:
                               extensionprops: {}
                               type: object
                               properties:
-                                type_url:
+                                '@type':
                                   ref: ""
                                   value:
                                     extensionprops: {}
                                     type: string
-                                value:
-                                  ref: ""
-                                  value:
-                                    extensionprops: {}
-                                    type: string
-                                    format: byte
                       message:
                         ref: ""
                         value:
@@ -1294,6 +1351,10 @@ paths:
                             value:
                               extensionprops: {}
                               type: string
+                              title: |-
+                                - PATH_SEPARATOR_UNKNOWN: Value not set.
+                                 - PATH_SEPARATOR_DOT: Dot "." path separator
+                                 - PATH_SEPARATOR_SLASH: Slash "/" path separtor
                               enum:
                                 - PATH_SEPARATOR_UNKNOWN
                                 - PATH_SEPARATOR_DOT
@@ -1310,6 +1371,7 @@ paths:
                             value:
                               extensionprops: {}
                               type: array
+                              title: list (1..N) of policy decisions (aka rules)
                               items:
                                 ref: ""
                                 value:
@@ -1320,6 +1382,7 @@ paths:
                             value:
                               extensionprops: {}
                               type: string
+                              title: policy path aka package name
                     policy_instance:
                       ref: '#/components/schemas/apiPolicyInstance'
                       value:
@@ -1331,11 +1394,13 @@ paths:
                             value:
                               extensionprops: {}
                               type: string
+                              title: label identifying the instance of the policy
                           name:
                             ref: ""
                             value:
                               extensionprops: {}
                               type: string
+                              title: policy name
                     resource_context:
                       ref: ""
                       value:
@@ -1397,17 +1462,11 @@ paths:
                               extensionprops: {}
                               type: object
                               properties:
-                                type_url:
+                                '@type':
                                   ref: ""
                                   value:
                                     extensionprops: {}
                                     type: string
-                                value:
-                                  ref: ""
-                                  value:
-                                    extensionprops: {}
-                                    type: string
-                                    format: byte
                       message:
                         ref: ""
                         value:
@@ -1481,6 +1540,7 @@ paths:
                             value:
                               extensionprops: {}
                               type: array
+                              title: list (1..N) of policy decisions (aka rules)
                               items:
                                 ref: ""
                                 value:
@@ -1491,6 +1551,7 @@ paths:
                             value:
                               extensionprops: {}
                               type: string
+                              title: policy path aka package name
                     policy_instance:
                       ref: '#/components/schemas/apiPolicyInstance'
                       value:
@@ -1502,11 +1563,13 @@ paths:
                             value:
                               extensionprops: {}
                               type: string
+                              title: label identifying the instance of the policy
                           name:
                             ref: ""
                             value:
                               extensionprops: {}
                               type: string
+                              title: policy name
                     resource_context:
                       ref: ""
                       value:
@@ -1579,17 +1642,11 @@ paths:
                               extensionprops: {}
                               type: object
                               properties:
-                                type_url:
+                                '@type':
                                   ref: ""
                                   value:
                                     extensionprops: {}
                                     type: string
-                                value:
-                                  ref: ""
-                                  value:
-                                    extensionprops: {}
-                                    type: string
-                                    format: byte
                       message:
                         ref: ""
                         value:
@@ -1668,16 +1725,24 @@ paths:
                             value:
                               extensionprops: {}
                               type: boolean
+                              title: default false
                           metrics:
                             ref: ""
                             value:
                               extensionprops: {}
                               type: boolean
+                              title: default false
                           trace:
                             ref: '#/components/schemas/v2TraceLevel'
                             value:
                               extensionprops: {}
                               type: string
+                              title: |-
+                                - TRACE_LEVEL_UNKNOWN: Value not set.
+                                 - TRACE_LEVEL_OFF: ExplainOffV1   ExplainModeV1 = "off"
+                                 - TRACE_LEVEL_FULL: ExplainFullV1  ExplainModeV1 = "full"
+                                 - TRACE_LEVEL_NOTES: ExplainNotesV1 ExplainModeV1 = "notes"
+                                 - TRACE_LEVEL_FAILS: ExplainFailsV1 ExplainModeV1 = "fails"
                               enum:
                                 - TRACE_LEVEL_UNKNOWN
                                 - TRACE_LEVEL_OFF
@@ -1690,6 +1755,7 @@ paths:
                             value:
                               extensionprops: {}
                               type: boolean
+                              title: default false
                     policy_context:
                       ref: '#/components/schemas/apiPolicyContext'
                       value:
@@ -1701,6 +1767,7 @@ paths:
                             value:
                               extensionprops: {}
                               type: array
+                              title: list (1..N) of policy decisions (aka rules)
                               items:
                                 ref: ""
                                 value:
@@ -1711,6 +1778,7 @@ paths:
                             value:
                               extensionprops: {}
                               type: string
+                              title: policy path aka package name
                     policy_instance:
                       ref: '#/components/schemas/apiPolicyInstance'
                       value:
@@ -1722,11 +1790,13 @@ paths:
                             value:
                               extensionprops: {}
                               type: string
+                              title: label identifying the instance of the policy
                           name:
                             ref: ""
                             value:
                               extensionprops: {}
                               type: string
+                              title: policy name
                     query:
                       ref: ""
                       value:
@@ -1813,17 +1883,11 @@ paths:
                               extensionprops: {}
                               type: object
                               properties:
-                                type_url:
+                                '@type':
                                   ref: ""
                                   value:
                                     extensionprops: {}
                                     type: string
-                                value:
-                                  ref: ""
-                                  value:
-                                    extensionprops: {}
-                                    type: string
-                                    format: byte
                       message:
                         ref: ""
                         value:
@@ -1912,17 +1976,11 @@ paths:
                               extensionprops: {}
                               type: object
                               properties:
-                                type_url:
+                                '@type':
                                   ref: ""
                                   value:
                                     extensionprops: {}
                                     type: string
-                                value:
-                                  ref: ""
-                                  value:
-                                    extensionprops: {}
-                                    type: string
-                                    format: byte
                       message:
                         ref: ""
                         value:
@@ -1954,6 +2012,7 @@ paths:
             extensionprops: {}
             name: policy_instance.name
             in: query
+            description: policy name
             schema:
               ref: ""
               value:
@@ -1964,6 +2023,7 @@ paths:
             extensionprops: {}
             name: policy_instance.instance_label
             in: query
+            description: label identifying the instance of the policy
             schema:
               ref: ""
               value:
@@ -1999,7 +2059,6 @@ paths:
                                   ref: ""
                                   value:
                                     extensionprops: {}
-                                    type: object
                                 id:
                                   ref: ""
                                   value:
@@ -2051,17 +2110,11 @@ paths:
                               extensionprops: {}
                               type: object
                               properties:
-                                type_url:
+                                '@type':
                                   ref: ""
                                   value:
                                     extensionprops: {}
                                     type: string
-                                value:
-                                  ref: ""
-                                  value:
-                                    extensionprops: {}
-                                    type: string
-                                    format: byte
                       message:
                         ref: ""
                         value:
@@ -2091,6 +2144,7 @@ paths:
               value:
                 extensionprops: {}
                 type: string
+                pattern: '[^/]+/.+'
         - ref: ""
           value:
             extensionprops: {}
@@ -2106,6 +2160,7 @@ paths:
             extensionprops: {}
             name: policy_instance.name
             in: query
+            description: policy name
             schema:
               ref: ""
               value:
@@ -2116,6 +2171,7 @@ paths:
             extensionprops: {}
             name: policy_instance.instance_label
             in: query
+            description: label identifying the instance of the policy
             schema:
               ref: ""
               value:
@@ -2146,7 +2202,6 @@ paths:
                               ref: ""
                               value:
                                 extensionprops: {}
-                                type: object
                             id:
                               ref: ""
                               value:
@@ -2198,17 +2253,11 @@ paths:
                               extensionprops: {}
                               type: object
                               properties:
-                                type_url:
+                                '@type':
                                   ref: ""
                                   value:
                                     extensionprops: {}
                                     type: string
-                                value:
-                                  ref: ""
-                                  value:
-                                    extensionprops: {}
-                                    type: string
-                                    format: byte
                       message:
                         ref: ""
                         value:
