@@ -103,4 +103,4 @@ jobs:
       - name: Publish to readme.io
         uses: readmeio/rdme@v8
         with:
-          rdme: openapi ./publish/directory/openapi.json --key=${{ stepa.vault.outputs.README_OAS_AUTHORIZER_KEY }} --id ${{ steps.vault.outputs.AUTHORIZER_API_DEFINITION_ID }}
+          rdme: openapi ./publish/directory/openapi.json --key=${{ steps.vault.outputs.README_OAS_AUTHORIZER_KEY }} --id ${{ steps.vault.outputs.AUTHORIZER_API_DEFINITION_ID }}
