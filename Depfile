@@ -2,16 +2,16 @@
 go:
   protoc-gen-openapiv2:
     importPath: "github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2"
-    version: "v2.5.0"
+    version: "v2.23.0"
   svu:
-    importPath: "github.com/caarlos0/svu"
-    version: "v1.6.1"
+    importPath: "github.com/caarlos0/svu/v2"
+    version: "v2.2.0"
   buf:
     importPath: "github.com/bufbuild/buf/cmd/buf"
-    version: "v1.3.1"
+    version: "v1.46.0"
   sver:
     importPath: "github.com/aserto-dev/sver/cmd/sver"
-    version: "v1.3.9"
+    version: "v1.3.13"
 bin:
   vault:
     url: "https://releases.hashicorp.com/vault/{{.Version}}/vault_{{.Version}}_{{.OS}}_{{.Arch}}.zip"

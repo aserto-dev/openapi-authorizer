@@ -141,11 +141,6 @@ func getClientFiles(fileSources string) ([]string, error) {
 
 // Generates from a dev build.
 func GenerateDev() error {
-	err := BuildDev()
-	if err != nil {
-		return err
-	}
-
 	bufImage := filepath.Join(getProtoRepo(), "bin", "authorizer.bin#format=bin")
 	fileSources := filepath.Join(getProtoRepo(), "proto#format=dir")
 
