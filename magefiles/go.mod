@@ -1,6 +1,6 @@
 module github.com/aserto-dev/openapi-authorizer/magefiles
 
-go 1.22.9
+go 1.22
 
 toolchain go1.23.2
 
