@@ -1,8 +1,8 @@
 module github.com/aserto-dev/openapi-authorizer/magefiles
 
-go 1.22.0
+go 1.22.11
 
-toolchain go1.23.2
+toolchain go1.23.5
 
 require (
 	github.com/aserto-dev/mage-loot v0.8.17
