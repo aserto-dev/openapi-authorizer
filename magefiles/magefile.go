@@ -11,7 +11,6 @@ import (
 	"path"
 	"path/filepath"
 	"strings"
-	"text/template"
 	"unicode"
 	"unicode/utf8"
 
@@ -52,7 +51,6 @@ func Deps() {
 
 // Generate the code
 func Generate() error {
-
 	tag, err := buf.GetLatestTag(bufImage)
 	if err != nil {
 		fmt.Println("Could not retrieve tags, using latest")
@@ -93,11 +91,6 @@ func gen(bufImage, fileSources, version string) error {
 	}
 
 	err = publishOpenAPIv3(version)
-	if err != nil {
-		return err
-	}
-
-	err = generateEmbedCode()
 	if err != nil {
 		return err
 	}
@@ -323,29 +316,6 @@ func publishOpenAPIv3(version string) error {
 	return nil
 }
 
-func generateEmbedCode() error {
-	t, err := template.New("embed").Parse(embedTemplate)
-	if err != nil {
-		return err
-	}
-
-	targets := []string{
-		"publish/authorizer/openapi.go",
-	}
-	for _, target := range targets {
-		w, err := os.Create(target)
-		if err != nil {
-			return err
-		}
-
-		err = t.Execute(w, nil)
-		if err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
 func fileExists(filepath string) bool {
 	info, err := os.Stat(filepath)
 	if os.IsNotExist(err) {
@@ -373,22 +343,23 @@ func toLowerFirst(s string) string {
 
 // Removes generated files
 func Clean() error {
-	err := os.RemoveAll("service")
-	if err != nil {
+	if err := os.RemoveAll("service"); err != nil {
 		return err
 	}
-	return os.RemoveAll("publish")
+
+	if err := cleanFile("publish/authorizer/openapi.json"); err != nil {
+		return err
+	}
+
+	return cleanFile("publish/authorizer/openapi.yaml")
 }
 
-const embedTemplate string = `package openapi
+func cleanFile(path string) error {
+	if err := os.Remove(path); err != nil {
+		if _, ok := err.(*os.PathError); !ok {
+			return err
+		}
+	}
 
-import "embed"
-
-//go:embed openapi.json
-var staticAssets embed.FS
-
-// Static embedded FS service openapi.json file.
-func Static() embed.FS {
-	return staticAssets
+	return nil
 }
-`

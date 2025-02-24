@@ -784,20 +784,8 @@
   ],
   "servers": [
     {
-      "description": "Hosted authorizer service",
-      "url": "https://authorizer.prod.aserto.com"
-    },
-    {
-      "description": "Local authorizer service using Topaz",
-      "url": "https://localhost:{port}",
-      "variables": {
-        "port": {
-          "default": "8383",
-          "enum": [
-            "8383"
-          ]
-        }
-      }
+      "description": "Aserto Authorizer service",
+      "url": "{{.Scheme}}://{{.Host}}"
     }
   ],
   "tags": [
