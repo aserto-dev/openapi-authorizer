@@ -34,6 +34,7 @@ func OpenApiHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		zerolog.Ctx(r.Context()).Err(err).Msg("failed to build template")
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+
 		return
 	}
 
@@ -46,6 +47,7 @@ func OpenApiHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		zerolog.Ctx(r.Context()).Err(err).Msg("failed to execute template")
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+
 		return
 	}
 }

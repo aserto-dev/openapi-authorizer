@@ -73,6 +73,17 @@
       },
       "type": "object"
     },
+    "authorizerv2Decision": {
+      "properties": {
+        "decision": {
+          "type": "string"
+        },
+        "is": {
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "protobufAny": {
       "additionalProperties": {},
       "properties": {
@@ -84,7 +95,7 @@
     },
     "protobufNullValue": {
       "default": "NULL_VALUE",
-      "description": "`NullValue` is a singleton enumeration to represent the null value for the\n`Value` type union.\n\n The JSON representation for `NullValue` is JSON `null`.\n\n - NULL_VALUE: Null value.",
+      "description": "`NullValue` is a singleton enumeration to represent the null value for the\n`Value` type union.\n\nThe JSON representation for `NullValue` is JSON `null`.\n\n - NULL_VALUE: Null value.",
       "enum": [
         "NULL_VALUE"
       ],
@@ -166,17 +177,6 @@
             "type": "string"
           },
           "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "v2Decision": {
-      "properties": {
-        "decision": {
-          "type": "string"
-        },
-        "is": {
-          "type": "boolean"
         }
       },
       "type": "object"
@@ -269,7 +269,7 @@
       "properties": {
         "decisions": {
           "items": {
-            "$ref": "#/definitions/v2Decision",
+            "$ref": "#/definitions/authorizerv2Decision",
             "type": "object"
           },
           "type": "array"

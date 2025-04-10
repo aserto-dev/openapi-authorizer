@@ -1,2291 +1,533 @@
-extensionprops: {}
-openapi: 3.0.3
 components:
-  extensionprops: {}
   schemas:
     apiIdentityContext:
-      ref: ""
-      value:
-        extensionprops: {}
-        type: object
-        properties:
-          identity:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: string
-          type:
-            ref: '#/components/schemas/apiIdentityType'
-            value:
-              extensionprops: {}
-              type: string
-              description: |-
-                Identity types, describes the payload type of the identity field inside the IdentityContext message.
-
-                 - IDENTITY_TYPE_UNKNOWN: Unknown, value not set, requests will fail with identity type not set error.
-                 - IDENTITY_TYPE_NONE: None, no explicit identity context set, equals anonymous.
-                 - IDENTITY_TYPE_SUB: Sub(ject), identity field contains an oAUTH subject.
-                 - IDENTITY_TYPE_JWT: JWT, identity field contains a JWT access token.
-                 - IDENTITY_TYPE_MANUAL: Manual, propagates thw identity field as-is, without validation, into the input object.
-              enum:
-                - IDENTITY_TYPE_UNKNOWN
-                - IDENTITY_TYPE_NONE
-                - IDENTITY_TYPE_SUB
-                - IDENTITY_TYPE_JWT
-                - IDENTITY_TYPE_MANUAL
-              default: IDENTITY_TYPE_UNKNOWN
+      properties:
+        identity:
+          type: string
+        type:
+          $ref: '#/components/schemas/apiIdentityType'
+      type: object
     apiIdentityType:
-      ref: ""
-      value:
-        extensionprops: {}
-        type: string
-        description: |-
-          Identity types, describes the payload type of the identity field inside the IdentityContext message.
+      default: IDENTITY_TYPE_UNKNOWN
+      description: |-
+        Identity types, describes the payload type of the identity field inside the IdentityContext message.
 
-           - IDENTITY_TYPE_UNKNOWN: Unknown, value not set, requests will fail with identity type not set error.
-           - IDENTITY_TYPE_NONE: None, no explicit identity context set, equals anonymous.
-           - IDENTITY_TYPE_SUB: Sub(ject), identity field contains an oAUTH subject.
-           - IDENTITY_TYPE_JWT: JWT, identity field contains a JWT access token.
-           - IDENTITY_TYPE_MANUAL: Manual, propagates thw identity field as-is, without validation, into the input object.
-        enum:
-          - IDENTITY_TYPE_UNKNOWN
-          - IDENTITY_TYPE_NONE
-          - IDENTITY_TYPE_SUB
-          - IDENTITY_TYPE_JWT
-          - IDENTITY_TYPE_MANUAL
-        default: IDENTITY_TYPE_UNKNOWN
+         - IDENTITY_TYPE_UNKNOWN: Unknown, value not set, requests will fail with identity type not set error.
+         - IDENTITY_TYPE_NONE: None, no explicit identity context set, equals anonymous.
+         - IDENTITY_TYPE_SUB: Sub(ject), identity field contains an oAUTH subject.
+         - IDENTITY_TYPE_JWT: JWT, identity field contains a JWT access token.
+         - IDENTITY_TYPE_MANUAL: Manual, propagates thw identity field as-is, without validation, into the input object.
+      enum:
+        - IDENTITY_TYPE_UNKNOWN
+        - IDENTITY_TYPE_NONE
+        - IDENTITY_TYPE_SUB
+        - IDENTITY_TYPE_JWT
+        - IDENTITY_TYPE_MANUAL
+      type: string
     apiModule:
-      ref: ""
-      value:
-        extensionprops: {}
-        type: object
-        properties:
-          ast:
-            ref: ""
-            value:
-              extensionprops: {}
-          id:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: string
-          package_path:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: string
-          package_root:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: string
-          raw:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: string
+      properties:
+        ast: {}
+        id:
+          type: string
+        package_path:
+          type: string
+        package_root:
+          type: string
+        raw:
+          type: string
+      type: object
     apiPolicyContext:
-      ref: ""
-      value:
-        extensionprops: {}
-        type: object
-        properties:
-          decisions:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: array
-              title: list (1..N) of policy decisions (aka rules)
-              items:
-                ref: ""
-                value:
-                  extensionprops: {}
-                  type: string
-          path:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: string
-              title: policy path aka package name
+      properties:
+        decisions:
+          items:
+            type: string
+          title: list (1..N) of policy decisions (aka rules)
+          type: array
+        path:
+          title: policy path aka package name
+          type: string
+      type: object
     apiPolicyInstance:
-      ref: ""
-      value:
-        extensionprops: {}
-        type: object
-        properties:
-          instance_label:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: string
-              title: label identifying the instance of the policy
-          name:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: string
-              title: policy name
+      properties:
+        instance_label:
+          title: label identifying the instance of the policy
+          type: string
+        name:
+          title: policy name
+          type: string
+      type: object
+    authorizerv2Decision:
+      properties:
+        decision:
+          type: string
+        is:
+          type: boolean
+      type: object
     protobufAny:
-      ref: ""
-      value:
-        extensionprops: {}
-        type: object
-        properties:
-          '@type':
-            ref: ""
-            value:
-              extensionprops: {}
-              type: string
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
     protobufNullValue:
-      ref: ""
-      value:
-        extensionprops: {}
-        type: string
-        description: |-
-          `NullValue` is a singleton enumeration to represent the null value for the
-          `Value` type union.
+      default: NULL_VALUE
+      description: |-
+        `NullValue` is a singleton enumeration to represent the null value for the
+        `Value` type union.
 
-           The JSON representation for `NullValue` is JSON `null`.
+        The JSON representation for `NullValue` is JSON `null`.
 
-           - NULL_VALUE: Null value.
-        enum:
-          - NULL_VALUE
-        default: NULL_VALUE
+         - NULL_VALUE: Null value.
+      enum:
+        - NULL_VALUE
+      type: string
     rpcStatus:
-      ref: ""
-      value:
-        extensionprops: {}
-        type: object
-        properties:
-          code:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: integer
-              format: int32
-          details:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: array
-              items:
-                ref: '#/components/schemas/protobufAny'
-                value:
-                  extensionprops: {}
-                  type: object
-                  properties:
-                    '@type':
-                      ref: ""
-                      value:
-                        extensionprops: {}
-                        type: string
-          message:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: string
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
     v2CompileRequest:
-      ref: ""
-      value:
-        extensionprops: {}
-        type: object
-        properties:
-          disable_inlining:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: array
-              items:
-                ref: ""
-                value:
-                  extensionprops: {}
-                  type: string
-          identity_context:
-            ref: '#/components/schemas/apiIdentityContext'
-            value:
-              extensionprops: {}
-              type: object
-              properties:
-                identity:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: string
-                type:
-                  ref: '#/components/schemas/apiIdentityType'
-                  value:
-                    extensionprops: {}
-                    type: string
-                    description: |-
-                      Identity types, describes the payload type of the identity field inside the IdentityContext message.
-
-                       - IDENTITY_TYPE_UNKNOWN: Unknown, value not set, requests will fail with identity type not set error.
-                       - IDENTITY_TYPE_NONE: None, no explicit identity context set, equals anonymous.
-                       - IDENTITY_TYPE_SUB: Sub(ject), identity field contains an oAUTH subject.
-                       - IDENTITY_TYPE_JWT: JWT, identity field contains a JWT access token.
-                       - IDENTITY_TYPE_MANUAL: Manual, propagates thw identity field as-is, without validation, into the input object.
-                    enum:
-                      - IDENTITY_TYPE_UNKNOWN
-                      - IDENTITY_TYPE_NONE
-                      - IDENTITY_TYPE_SUB
-                      - IDENTITY_TYPE_JWT
-                      - IDENTITY_TYPE_MANUAL
-                    default: IDENTITY_TYPE_UNKNOWN
-          input:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: string
-          options:
-            ref: '#/components/schemas/v2QueryOptions'
-            value:
-              extensionprops: {}
-              type: object
-              properties:
-                instrument:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: boolean
-                    title: default false
-                metrics:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: boolean
-                    title: default false
-                trace:
-                  ref: '#/components/schemas/v2TraceLevel'
-                  value:
-                    extensionprops: {}
-                    type: string
-                    title: |-
-                      - TRACE_LEVEL_UNKNOWN: Value not set.
-                       - TRACE_LEVEL_OFF: ExplainOffV1   ExplainModeV1 = "off"
-                       - TRACE_LEVEL_FULL: ExplainFullV1  ExplainModeV1 = "full"
-                       - TRACE_LEVEL_NOTES: ExplainNotesV1 ExplainModeV1 = "notes"
-                       - TRACE_LEVEL_FAILS: ExplainFailsV1 ExplainModeV1 = "fails"
-                    enum:
-                      - TRACE_LEVEL_UNKNOWN
-                      - TRACE_LEVEL_OFF
-                      - TRACE_LEVEL_FULL
-                      - TRACE_LEVEL_NOTES
-                      - TRACE_LEVEL_FAILS
-                    default: TRACE_LEVEL_UNKNOWN
-                trace_summary:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: boolean
-                    title: default false
-          policy_context:
-            ref: '#/components/schemas/apiPolicyContext'
-            value:
-              extensionprops: {}
-              type: object
-              properties:
-                decisions:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: array
-                    title: list (1..N) of policy decisions (aka rules)
-                    items:
-                      ref: ""
-                      value:
-                        extensionprops: {}
-                        type: string
-                path:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: string
-                    title: policy path aka package name
-          policy_instance:
-            ref: '#/components/schemas/apiPolicyInstance'
-            value:
-              extensionprops: {}
-              type: object
-              properties:
-                instance_label:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: string
-                    title: label identifying the instance of the policy
-                name:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: string
-                    title: policy name
-          query:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: string
-          resource_context:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: object
-          unknowns:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: array
-              items:
-                ref: ""
-                value:
-                  extensionprops: {}
-                  type: string
+      properties:
+        disable_inlining:
+          items:
+            type: string
+          type: array
+        identity_context:
+          $ref: '#/components/schemas/apiIdentityContext'
+        input:
+          type: string
+        options:
+          $ref: '#/components/schemas/v2QueryOptions'
+        policy_context:
+          $ref: '#/components/schemas/apiPolicyContext'
+        policy_instance:
+          $ref: '#/components/schemas/apiPolicyInstance'
+        query:
+          type: string
+        resource_context:
+          type: object
+        unknowns:
+          items:
+            type: string
+          type: array
+      type: object
     v2CompileResponse:
-      ref: ""
-      value:
-        extensionprops: {}
-        type: object
-        properties:
-          metrics:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: object
-          result:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: object
-          trace:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: array
-              items:
-                ref: ""
-                value:
-                  extensionprops: {}
-                  type: object
-          trace_summary:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: array
-              items:
-                ref: ""
-                value:
-                  extensionprops: {}
-                  type: string
-    v2Decision:
-      ref: ""
-      value:
-        extensionprops: {}
-        type: object
-        properties:
-          decision:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: string
-          is:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: boolean
+      properties:
+        metrics:
+          type: object
+        result:
+          type: object
+        trace:
+          items:
+            type: object
+          type: array
+        trace_summary:
+          items:
+            type: string
+          type: array
+      type: object
     v2DecisionTreeOptions:
-      ref: ""
-      value:
-        extensionprops: {}
-        type: object
-        properties:
-          path_separator:
-            ref: '#/components/schemas/v2PathSeparator'
-            value:
-              extensionprops: {}
-              type: string
-              title: |-
-                - PATH_SEPARATOR_UNKNOWN: Value not set.
-                 - PATH_SEPARATOR_DOT: Dot "." path separator
-                 - PATH_SEPARATOR_SLASH: Slash "/" path separtor
-              enum:
-                - PATH_SEPARATOR_UNKNOWN
-                - PATH_SEPARATOR_DOT
-                - PATH_SEPARATOR_SLASH
-              default: PATH_SEPARATOR_UNKNOWN
+      properties:
+        path_separator:
+          $ref: '#/components/schemas/v2PathSeparator'
+      type: object
     v2DecisionTreeRequest:
-      ref: ""
-      value:
-        extensionprops: {}
-        type: object
-        properties:
-          identity_context:
-            ref: '#/components/schemas/apiIdentityContext'
-            value:
-              extensionprops: {}
-              type: object
-              properties:
-                identity:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: string
-                type:
-                  ref: '#/components/schemas/apiIdentityType'
-                  value:
-                    extensionprops: {}
-                    type: string
-                    description: |-
-                      Identity types, describes the payload type of the identity field inside the IdentityContext message.
-
-                       - IDENTITY_TYPE_UNKNOWN: Unknown, value not set, requests will fail with identity type not set error.
-                       - IDENTITY_TYPE_NONE: None, no explicit identity context set, equals anonymous.
-                       - IDENTITY_TYPE_SUB: Sub(ject), identity field contains an oAUTH subject.
-                       - IDENTITY_TYPE_JWT: JWT, identity field contains a JWT access token.
-                       - IDENTITY_TYPE_MANUAL: Manual, propagates thw identity field as-is, without validation, into the input object.
-                    enum:
-                      - IDENTITY_TYPE_UNKNOWN
-                      - IDENTITY_TYPE_NONE
-                      - IDENTITY_TYPE_SUB
-                      - IDENTITY_TYPE_JWT
-                      - IDENTITY_TYPE_MANUAL
-                    default: IDENTITY_TYPE_UNKNOWN
-          options:
-            ref: '#/components/schemas/v2DecisionTreeOptions'
-            value:
-              extensionprops: {}
-              type: object
-              properties:
-                path_separator:
-                  ref: '#/components/schemas/v2PathSeparator'
-                  value:
-                    extensionprops: {}
-                    type: string
-                    title: |-
-                      - PATH_SEPARATOR_UNKNOWN: Value not set.
-                       - PATH_SEPARATOR_DOT: Dot "." path separator
-                       - PATH_SEPARATOR_SLASH: Slash "/" path separtor
-                    enum:
-                      - PATH_SEPARATOR_UNKNOWN
-                      - PATH_SEPARATOR_DOT
-                      - PATH_SEPARATOR_SLASH
-                    default: PATH_SEPARATOR_UNKNOWN
-          policy_context:
-            ref: '#/components/schemas/apiPolicyContext'
-            value:
-              extensionprops: {}
-              type: object
-              properties:
-                decisions:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: array
-                    title: list (1..N) of policy decisions (aka rules)
-                    items:
-                      ref: ""
-                      value:
-                        extensionprops: {}
-                        type: string
-                path:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: string
-                    title: policy path aka package name
-          policy_instance:
-            ref: '#/components/schemas/apiPolicyInstance'
-            value:
-              extensionprops: {}
-              type: object
-              properties:
-                instance_label:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: string
-                    title: label identifying the instance of the policy
-                name:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: string
-                    title: policy name
-          resource_context:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: object
+      properties:
+        identity_context:
+          $ref: '#/components/schemas/apiIdentityContext'
+        options:
+          $ref: '#/components/schemas/v2DecisionTreeOptions'
+        policy_context:
+          $ref: '#/components/schemas/apiPolicyContext'
+        policy_instance:
+          $ref: '#/components/schemas/apiPolicyInstance'
+        resource_context:
+          type: object
+      type: object
     v2DecisionTreeResponse:
-      ref: ""
-      value:
-        extensionprops: {}
-        type: object
-        properties:
-          path:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: object
-          path_root:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: string
+      properties:
+        path:
+          type: object
+        path_root:
+          type: string
+      type: object
     v2GetPolicyResponse:
-      ref: ""
-      value:
-        extensionprops: {}
-        type: object
-        properties:
-          result:
-            ref: '#/components/schemas/apiModule'
-            value:
-              extensionprops: {}
-              type: object
-              properties:
-                ast:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                id:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: string
-                package_path:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: string
-                package_root:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: string
-                raw:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: string
+      properties:
+        result:
+          $ref: '#/components/schemas/apiModule'
+      type: object
     v2InfoResponse:
-      ref: ""
-      value:
-        extensionprops: {}
-        type: object
-        properties:
-          arch:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: string
-          commit:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: string
-          date:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: string
-          os:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: string
-          version:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: string
+      properties:
+        arch:
+          type: string
+        commit:
+          type: string
+        date:
+          type: string
+        os:
+          type: string
+        version:
+          type: string
+      type: object
     v2IsRequest:
-      ref: ""
-      value:
-        extensionprops: {}
-        type: object
-        properties:
-          identity_context:
-            ref: '#/components/schemas/apiIdentityContext'
-            value:
-              extensionprops: {}
-              type: object
-              properties:
-                identity:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: string
-                type:
-                  ref: '#/components/schemas/apiIdentityType'
-                  value:
-                    extensionprops: {}
-                    type: string
-                    description: |-
-                      Identity types, describes the payload type of the identity field inside the IdentityContext message.
-
-                       - IDENTITY_TYPE_UNKNOWN: Unknown, value not set, requests will fail with identity type not set error.
-                       - IDENTITY_TYPE_NONE: None, no explicit identity context set, equals anonymous.
-                       - IDENTITY_TYPE_SUB: Sub(ject), identity field contains an oAUTH subject.
-                       - IDENTITY_TYPE_JWT: JWT, identity field contains a JWT access token.
-                       - IDENTITY_TYPE_MANUAL: Manual, propagates thw identity field as-is, without validation, into the input object.
-                    enum:
-                      - IDENTITY_TYPE_UNKNOWN
-                      - IDENTITY_TYPE_NONE
-                      - IDENTITY_TYPE_SUB
-                      - IDENTITY_TYPE_JWT
-                      - IDENTITY_TYPE_MANUAL
-                    default: IDENTITY_TYPE_UNKNOWN
-          policy_context:
-            ref: '#/components/schemas/apiPolicyContext'
-            value:
-              extensionprops: {}
-              type: object
-              properties:
-                decisions:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: array
-                    title: list (1..N) of policy decisions (aka rules)
-                    items:
-                      ref: ""
-                      value:
-                        extensionprops: {}
-                        type: string
-                path:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: string
-                    title: policy path aka package name
-          policy_instance:
-            ref: '#/components/schemas/apiPolicyInstance'
-            value:
-              extensionprops: {}
-              type: object
-              properties:
-                instance_label:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: string
-                    title: label identifying the instance of the policy
-                name:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: string
-                    title: policy name
-          resource_context:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: object
+      properties:
+        identity_context:
+          $ref: '#/components/schemas/apiIdentityContext'
+        policy_context:
+          $ref: '#/components/schemas/apiPolicyContext'
+        policy_instance:
+          $ref: '#/components/schemas/apiPolicyInstance'
+        resource_context:
+          type: object
+      type: object
     v2IsResponse:
-      ref: ""
-      value:
-        extensionprops: {}
-        type: object
-        properties:
-          decisions:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: array
-              items:
-                ref: '#/components/schemas/v2Decision'
-                value:
-                  extensionprops: {}
-                  type: object
-                  properties:
-                    decision:
-                      ref: ""
-                      value:
-                        extensionprops: {}
-                        type: string
-                    is:
-                      ref: ""
-                      value:
-                        extensionprops: {}
-                        type: boolean
+      properties:
+        decisions:
+          items:
+            $ref: '#/components/schemas/authorizerv2Decision'
+          type: array
+      type: object
     v2ListPoliciesResponse:
-      ref: ""
-      value:
-        extensionprops: {}
-        type: object
-        properties:
-          result:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: array
-              items:
-                ref: '#/components/schemas/apiModule'
-                value:
-                  extensionprops: {}
-                  type: object
-                  properties:
-                    ast:
-                      ref: ""
-                      value:
-                        extensionprops: {}
-                    id:
-                      ref: ""
-                      value:
-                        extensionprops: {}
-                        type: string
-                    package_path:
-                      ref: ""
-                      value:
-                        extensionprops: {}
-                        type: string
-                    package_root:
-                      ref: ""
-                      value:
-                        extensionprops: {}
-                        type: string
-                    raw:
-                      ref: ""
-                      value:
-                        extensionprops: {}
-                        type: string
+      properties:
+        result:
+          items:
+            $ref: '#/components/schemas/apiModule'
+          type: array
+      type: object
     v2PathSeparator:
-      ref: ""
-      value:
-        extensionprops: {}
-        type: string
-        title: |-
-          - PATH_SEPARATOR_UNKNOWN: Value not set.
-           - PATH_SEPARATOR_DOT: Dot "." path separator
-           - PATH_SEPARATOR_SLASH: Slash "/" path separtor
-        enum:
-          - PATH_SEPARATOR_UNKNOWN
-          - PATH_SEPARATOR_DOT
-          - PATH_SEPARATOR_SLASH
-        default: PATH_SEPARATOR_UNKNOWN
+      default: PATH_SEPARATOR_UNKNOWN
+      enum:
+        - PATH_SEPARATOR_UNKNOWN
+        - PATH_SEPARATOR_DOT
+        - PATH_SEPARATOR_SLASH
+      title: |-
+        - PATH_SEPARATOR_UNKNOWN: Value not set.
+         - PATH_SEPARATOR_DOT: Dot "." path separator
+         - PATH_SEPARATOR_SLASH: Slash "/" path separtor
+      type: string
     v2QueryOptions:
-      ref: ""
-      value:
-        extensionprops: {}
-        type: object
-        properties:
-          instrument:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: boolean
-              title: default false
-          metrics:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: boolean
-              title: default false
-          trace:
-            ref: '#/components/schemas/v2TraceLevel'
-            value:
-              extensionprops: {}
-              type: string
-              title: |-
-                - TRACE_LEVEL_UNKNOWN: Value not set.
-                 - TRACE_LEVEL_OFF: ExplainOffV1   ExplainModeV1 = "off"
-                 - TRACE_LEVEL_FULL: ExplainFullV1  ExplainModeV1 = "full"
-                 - TRACE_LEVEL_NOTES: ExplainNotesV1 ExplainModeV1 = "notes"
-                 - TRACE_LEVEL_FAILS: ExplainFailsV1 ExplainModeV1 = "fails"
-              enum:
-                - TRACE_LEVEL_UNKNOWN
-                - TRACE_LEVEL_OFF
-                - TRACE_LEVEL_FULL
-                - TRACE_LEVEL_NOTES
-                - TRACE_LEVEL_FAILS
-              default: TRACE_LEVEL_UNKNOWN
-          trace_summary:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: boolean
-              title: default false
+      properties:
+        instrument:
+          title: default false
+          type: boolean
+        metrics:
+          title: default false
+          type: boolean
+        trace:
+          $ref: '#/components/schemas/v2TraceLevel'
+        trace_summary:
+          title: default false
+          type: boolean
+      type: object
     v2QueryRequest:
-      ref: ""
-      value:
-        extensionprops: {}
-        type: object
-        properties:
-          identity_context:
-            ref: '#/components/schemas/apiIdentityContext'
-            value:
-              extensionprops: {}
-              type: object
-              properties:
-                identity:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: string
-                type:
-                  ref: '#/components/schemas/apiIdentityType'
-                  value:
-                    extensionprops: {}
-                    type: string
-                    description: |-
-                      Identity types, describes the payload type of the identity field inside the IdentityContext message.
-
-                       - IDENTITY_TYPE_UNKNOWN: Unknown, value not set, requests will fail with identity type not set error.
-                       - IDENTITY_TYPE_NONE: None, no explicit identity context set, equals anonymous.
-                       - IDENTITY_TYPE_SUB: Sub(ject), identity field contains an oAUTH subject.
-                       - IDENTITY_TYPE_JWT: JWT, identity field contains a JWT access token.
-                       - IDENTITY_TYPE_MANUAL: Manual, propagates thw identity field as-is, without validation, into the input object.
-                    enum:
-                      - IDENTITY_TYPE_UNKNOWN
-                      - IDENTITY_TYPE_NONE
-                      - IDENTITY_TYPE_SUB
-                      - IDENTITY_TYPE_JWT
-                      - IDENTITY_TYPE_MANUAL
-                    default: IDENTITY_TYPE_UNKNOWN
-          input:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: string
-          options:
-            ref: '#/components/schemas/v2QueryOptions'
-            value:
-              extensionprops: {}
-              type: object
-              properties:
-                instrument:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: boolean
-                    title: default false
-                metrics:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: boolean
-                    title: default false
-                trace:
-                  ref: '#/components/schemas/v2TraceLevel'
-                  value:
-                    extensionprops: {}
-                    type: string
-                    title: |-
-                      - TRACE_LEVEL_UNKNOWN: Value not set.
-                       - TRACE_LEVEL_OFF: ExplainOffV1   ExplainModeV1 = "off"
-                       - TRACE_LEVEL_FULL: ExplainFullV1  ExplainModeV1 = "full"
-                       - TRACE_LEVEL_NOTES: ExplainNotesV1 ExplainModeV1 = "notes"
-                       - TRACE_LEVEL_FAILS: ExplainFailsV1 ExplainModeV1 = "fails"
-                    enum:
-                      - TRACE_LEVEL_UNKNOWN
-                      - TRACE_LEVEL_OFF
-                      - TRACE_LEVEL_FULL
-                      - TRACE_LEVEL_NOTES
-                      - TRACE_LEVEL_FAILS
-                    default: TRACE_LEVEL_UNKNOWN
-                trace_summary:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: boolean
-                    title: default false
-          policy_context:
-            ref: '#/components/schemas/apiPolicyContext'
-            value:
-              extensionprops: {}
-              type: object
-              properties:
-                decisions:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: array
-                    title: list (1..N) of policy decisions (aka rules)
-                    items:
-                      ref: ""
-                      value:
-                        extensionprops: {}
-                        type: string
-                path:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: string
-                    title: policy path aka package name
-          policy_instance:
-            ref: '#/components/schemas/apiPolicyInstance'
-            value:
-              extensionprops: {}
-              type: object
-              properties:
-                instance_label:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: string
-                    title: label identifying the instance of the policy
-                name:
-                  ref: ""
-                  value:
-                    extensionprops: {}
-                    type: string
-                    title: policy name
-          query:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: string
-          resource_context:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: object
+      properties:
+        identity_context:
+          $ref: '#/components/schemas/apiIdentityContext'
+        input:
+          type: string
+        options:
+          $ref: '#/components/schemas/v2QueryOptions'
+        policy_context:
+          $ref: '#/components/schemas/apiPolicyContext'
+        policy_instance:
+          $ref: '#/components/schemas/apiPolicyInstance'
+        query:
+          type: string
+        resource_context:
+          type: object
+      type: object
     v2QueryResponse:
-      ref: ""
-      value:
-        extensionprops: {}
-        type: object
-        properties:
-          metrics:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: object
-          response:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: object
-          trace:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: array
-              items:
-                ref: ""
-                value:
-                  extensionprops: {}
-                  type: object
-          trace_summary:
-            ref: ""
-            value:
-              extensionprops: {}
-              type: array
-              items:
-                ref: ""
-                value:
-                  extensionprops: {}
-                  type: string
+      properties:
+        metrics:
+          type: object
+        response:
+          type: object
+        trace:
+          items:
+            type: object
+          type: array
+        trace_summary:
+          items:
+            type: string
+          type: array
+      type: object
     v2TraceLevel:
-      ref: ""
-      value:
-        extensionprops: {}
-        type: string
-        title: |-
-          - TRACE_LEVEL_UNKNOWN: Value not set.
-           - TRACE_LEVEL_OFF: ExplainOffV1   ExplainModeV1 = "off"
-           - TRACE_LEVEL_FULL: ExplainFullV1  ExplainModeV1 = "full"
-           - TRACE_LEVEL_NOTES: ExplainNotesV1 ExplainModeV1 = "notes"
-           - TRACE_LEVEL_FAILS: ExplainFailsV1 ExplainModeV1 = "fails"
-        enum:
-          - TRACE_LEVEL_UNKNOWN
-          - TRACE_LEVEL_OFF
-          - TRACE_LEVEL_FULL
-          - TRACE_LEVEL_NOTES
-          - TRACE_LEVEL_FAILS
-        default: TRACE_LEVEL_UNKNOWN
+      default: TRACE_LEVEL_UNKNOWN
+      enum:
+        - TRACE_LEVEL_UNKNOWN
+        - TRACE_LEVEL_OFF
+        - TRACE_LEVEL_FULL
+        - TRACE_LEVEL_NOTES
+        - TRACE_LEVEL_FAILS
+      title: |-
+        - TRACE_LEVEL_UNKNOWN: Value not set.
+         - TRACE_LEVEL_OFF: ExplainOffV1   ExplainModeV1 = "off"
+         - TRACE_LEVEL_FULL: ExplainFullV1  ExplainModeV1 = "full"
+         - TRACE_LEVEL_NOTES: ExplainNotesV1 ExplainModeV1 = "notes"
+         - TRACE_LEVEL_FAILS: ExplainFailsV1 ExplainModeV1 = "fails"
+      type: string
   securitySchemes:
     AuthorizerAPIKey:
-      ref: ""
-      value:
-        extensionprops: {}
-        type: apiKey
-        name: authorization
-        in: header
+      in: header
+      name: authorization
+      type: apiKey
     TenantID:
-      ref: ""
-      value:
-        extensionprops: {}
-        type: apiKey
-        description: Aserto Tenant ID
-        name: aserto-tenant-id
-        in: header
+      description: Aserto Tenant ID
+      in: header
+      name: aserto-tenant-id
+      type: apiKey
+externalDocs:
+  description: API documentation
+  url: https://docs.aserto.com
 info:
-  extensionprops: {}
-  title: Authorizer
-  description: Authorizer service
-  termsOfService: https://aserto.com/terms/
   contact:
-    extensionprops: {}
+    email: support@aserto.com
     name: API Support
     url: https://aserto.com/support
-    email: support@aserto.com
+  description: Authorizer service
   license:
-    extensionprops: {}
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: https://aserto.com/terms/
+  title: Authorizer
   version: v0.20.10
+openapi: 3.0.3
 paths:
   /api/v2/authz/compile:
-    extensionprops: {}
     post:
-      extensionprops: {}
-      tags:
-        - Authorizer
-      summary: Compile
       description: Executes a partial query on the loaded policy runtime.
       operationId: authorizer.compile
       requestBody:
-        ref: ""
-        value:
-          extensionprops: {}
-          required: true
-          content:
-            application/json:
-              extensionprops: {}
-              schema:
-                ref: '#/components/schemas/v2CompileRequest'
-                value:
-                  extensionprops: {}
-                  type: object
-                  properties:
-                    disable_inlining:
-                      ref: ""
-                      value:
-                        extensionprops: {}
-                        type: array
-                        items:
-                          ref: ""
-                          value:
-                            extensionprops: {}
-                            type: string
-                    identity_context:
-                      ref: '#/components/schemas/apiIdentityContext'
-                      value:
-                        extensionprops: {}
-                        type: object
-                        properties:
-                          identity:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: string
-                          type:
-                            ref: '#/components/schemas/apiIdentityType'
-                            value:
-                              extensionprops: {}
-                              type: string
-                              description: |-
-                                Identity types, describes the payload type of the identity field inside the IdentityContext message.
-
-                                 - IDENTITY_TYPE_UNKNOWN: Unknown, value not set, requests will fail with identity type not set error.
-                                 - IDENTITY_TYPE_NONE: None, no explicit identity context set, equals anonymous.
-                                 - IDENTITY_TYPE_SUB: Sub(ject), identity field contains an oAUTH subject.
-                                 - IDENTITY_TYPE_JWT: JWT, identity field contains a JWT access token.
-                                 - IDENTITY_TYPE_MANUAL: Manual, propagates thw identity field as-is, without validation, into the input object.
-                              enum:
-                                - IDENTITY_TYPE_UNKNOWN
-                                - IDENTITY_TYPE_NONE
-                                - IDENTITY_TYPE_SUB
-                                - IDENTITY_TYPE_JWT
-                                - IDENTITY_TYPE_MANUAL
-                              default: IDENTITY_TYPE_UNKNOWN
-                    input:
-                      ref: ""
-                      value:
-                        extensionprops: {}
-                        type: string
-                    options:
-                      ref: '#/components/schemas/v2QueryOptions'
-                      value:
-                        extensionprops: {}
-                        type: object
-                        properties:
-                          instrument:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: boolean
-                              title: default false
-                          metrics:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: boolean
-                              title: default false
-                          trace:
-                            ref: '#/components/schemas/v2TraceLevel'
-                            value:
-                              extensionprops: {}
-                              type: string
-                              title: |-
-                                - TRACE_LEVEL_UNKNOWN: Value not set.
-                                 - TRACE_LEVEL_OFF: ExplainOffV1   ExplainModeV1 = "off"
-                                 - TRACE_LEVEL_FULL: ExplainFullV1  ExplainModeV1 = "full"
-                                 - TRACE_LEVEL_NOTES: ExplainNotesV1 ExplainModeV1 = "notes"
-                                 - TRACE_LEVEL_FAILS: ExplainFailsV1 ExplainModeV1 = "fails"
-                              enum:
-                                - TRACE_LEVEL_UNKNOWN
-                                - TRACE_LEVEL_OFF
-                                - TRACE_LEVEL_FULL
-                                - TRACE_LEVEL_NOTES
-                                - TRACE_LEVEL_FAILS
-                              default: TRACE_LEVEL_UNKNOWN
-                          trace_summary:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: boolean
-                              title: default false
-                    policy_context:
-                      ref: '#/components/schemas/apiPolicyContext'
-                      value:
-                        extensionprops: {}
-                        type: object
-                        properties:
-                          decisions:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: array
-                              title: list (1..N) of policy decisions (aka rules)
-                              items:
-                                ref: ""
-                                value:
-                                  extensionprops: {}
-                                  type: string
-                          path:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: string
-                              title: policy path aka package name
-                    policy_instance:
-                      ref: '#/components/schemas/apiPolicyInstance'
-                      value:
-                        extensionprops: {}
-                        type: object
-                        properties:
-                          instance_label:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: string
-                              title: label identifying the instance of the policy
-                          name:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: string
-                              title: policy name
-                    query:
-                      ref: ""
-                      value:
-                        extensionprops: {}
-                        type: string
-                    resource_context:
-                      ref: ""
-                      value:
-                        extensionprops: {}
-                        type: object
-                    unknowns:
-                      ref: ""
-                      value:
-                        extensionprops: {}
-                        type: array
-                        items:
-                          ref: ""
-                          value:
-                            extensionprops: {}
-                            type: string
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2CompileRequest'
+        required: true
+        x-originalParamName: body
       responses:
         "200":
-          ref: ""
-          value:
-            extensionprops: {}
-            description: A successful response.
-            content:
-              application/json:
-                extensionprops: {}
-                schema:
-                  ref: '#/components/schemas/v2CompileResponse'
-                  value:
-                    extensionprops: {}
-                    type: object
-                    properties:
-                      metrics:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: object
-                      result:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: object
-                      trace:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: array
-                          items:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: object
-                      trace_summary:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: array
-                          items:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2CompileResponse'
+          description: A successful response.
         default:
-          ref: ""
-          value:
-            extensionprops: {}
-            description: An unexpected error response.
-            content:
-              application/json:
-                extensionprops: {}
-                schema:
-                  ref: '#/components/schemas/rpcStatus'
-                  value:
-                    extensionprops: {}
-                    type: object
-                    properties:
-                      code:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: integer
-                          format: int32
-                      details:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: array
-                          items:
-                            ref: '#/components/schemas/protobufAny'
-                            value:
-                              extensionprops: {}
-                              type: object
-                              properties:
-                                '@type':
-                                  ref: ""
-                                  value:
-                                    extensionprops: {}
-                                    type: string
-                      message:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
       security:
         - AuthorizerAPIKey: []
           TenantID: []
-  /api/v2/authz/decisiontree:
-    extensionprops: {}
-    post:
-      extensionprops: {}
+      summary: Compile
       tags:
         - Authorizer
-      summary: Decision tree
+  /api/v2/authz/decisiontree:
+    post:
       description: Returns decision tree for given identity context.
       operationId: authorizer.decision_tree
       requestBody:
-        ref: ""
-        value:
-          extensionprops: {}
-          required: true
-          content:
-            application/json:
-              extensionprops: {}
-              schema:
-                ref: '#/components/schemas/v2DecisionTreeRequest'
-                value:
-                  extensionprops: {}
-                  type: object
-                  properties:
-                    identity_context:
-                      ref: '#/components/schemas/apiIdentityContext'
-                      value:
-                        extensionprops: {}
-                        type: object
-                        properties:
-                          identity:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: string
-                          type:
-                            ref: '#/components/schemas/apiIdentityType'
-                            value:
-                              extensionprops: {}
-                              type: string
-                              description: |-
-                                Identity types, describes the payload type of the identity field inside the IdentityContext message.
-
-                                 - IDENTITY_TYPE_UNKNOWN: Unknown, value not set, requests will fail with identity type not set error.
-                                 - IDENTITY_TYPE_NONE: None, no explicit identity context set, equals anonymous.
-                                 - IDENTITY_TYPE_SUB: Sub(ject), identity field contains an oAUTH subject.
-                                 - IDENTITY_TYPE_JWT: JWT, identity field contains a JWT access token.
-                                 - IDENTITY_TYPE_MANUAL: Manual, propagates thw identity field as-is, without validation, into the input object.
-                              enum:
-                                - IDENTITY_TYPE_UNKNOWN
-                                - IDENTITY_TYPE_NONE
-                                - IDENTITY_TYPE_SUB
-                                - IDENTITY_TYPE_JWT
-                                - IDENTITY_TYPE_MANUAL
-                              default: IDENTITY_TYPE_UNKNOWN
-                    options:
-                      ref: '#/components/schemas/v2DecisionTreeOptions'
-                      value:
-                        extensionprops: {}
-                        type: object
-                        properties:
-                          path_separator:
-                            ref: '#/components/schemas/v2PathSeparator'
-                            value:
-                              extensionprops: {}
-                              type: string
-                              title: |-
-                                - PATH_SEPARATOR_UNKNOWN: Value not set.
-                                 - PATH_SEPARATOR_DOT: Dot "." path separator
-                                 - PATH_SEPARATOR_SLASH: Slash "/" path separtor
-                              enum:
-                                - PATH_SEPARATOR_UNKNOWN
-                                - PATH_SEPARATOR_DOT
-                                - PATH_SEPARATOR_SLASH
-                              default: PATH_SEPARATOR_UNKNOWN
-                    policy_context:
-                      ref: '#/components/schemas/apiPolicyContext'
-                      value:
-                        extensionprops: {}
-                        type: object
-                        properties:
-                          decisions:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: array
-                              title: list (1..N) of policy decisions (aka rules)
-                              items:
-                                ref: ""
-                                value:
-                                  extensionprops: {}
-                                  type: string
-                          path:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: string
-                              title: policy path aka package name
-                    policy_instance:
-                      ref: '#/components/schemas/apiPolicyInstance'
-                      value:
-                        extensionprops: {}
-                        type: object
-                        properties:
-                          instance_label:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: string
-                              title: label identifying the instance of the policy
-                          name:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: string
-                              title: policy name
-                    resource_context:
-                      ref: ""
-                      value:
-                        extensionprops: {}
-                        type: object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2DecisionTreeRequest'
+        required: true
+        x-originalParamName: body
       responses:
         "200":
-          ref: ""
-          value:
-            extensionprops: {}
-            description: A successful response.
-            content:
-              application/json:
-                extensionprops: {}
-                schema:
-                  ref: '#/components/schemas/v2DecisionTreeResponse'
-                  value:
-                    extensionprops: {}
-                    type: object
-                    properties:
-                      path:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: object
-                      path_root:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2DecisionTreeResponse'
+          description: A successful response.
         default:
-          ref: ""
-          value:
-            extensionprops: {}
-            description: An unexpected error response.
-            content:
-              application/json:
-                extensionprops: {}
-                schema:
-                  ref: '#/components/schemas/rpcStatus'
-                  value:
-                    extensionprops: {}
-                    type: object
-                    properties:
-                      code:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: integer
-                          format: int32
-                      details:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: array
-                          items:
-                            ref: '#/components/schemas/protobufAny'
-                            value:
-                              extensionprops: {}
-                              type: object
-                              properties:
-                                '@type':
-                                  ref: ""
-                                  value:
-                                    extensionprops: {}
-                                    type: string
-                      message:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
       security:
         - AuthorizerAPIKey: []
           TenantID: []
-  /api/v2/authz/is:
-    extensionprops: {}
-    post:
-      extensionprops: {}
+      summary: Decision tree
       tags:
         - Authorizer
-      summary: Is (authorized)
+  /api/v2/authz/is:
+    post:
       description: Determines if identity context is authorized to access the resource guarded by the given policy.
       operationId: authorizer.is
       requestBody:
-        ref: ""
-        value:
-          extensionprops: {}
-          required: true
-          content:
-            application/json:
-              extensionprops: {}
-              schema:
-                ref: '#/components/schemas/v2IsRequest'
-                value:
-                  extensionprops: {}
-                  type: object
-                  properties:
-                    identity_context:
-                      ref: '#/components/schemas/apiIdentityContext'
-                      value:
-                        extensionprops: {}
-                        type: object
-                        properties:
-                          identity:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: string
-                          type:
-                            ref: '#/components/schemas/apiIdentityType'
-                            value:
-                              extensionprops: {}
-                              type: string
-                              description: |-
-                                Identity types, describes the payload type of the identity field inside the IdentityContext message.
-
-                                 - IDENTITY_TYPE_UNKNOWN: Unknown, value not set, requests will fail with identity type not set error.
-                                 - IDENTITY_TYPE_NONE: None, no explicit identity context set, equals anonymous.
-                                 - IDENTITY_TYPE_SUB: Sub(ject), identity field contains an oAUTH subject.
-                                 - IDENTITY_TYPE_JWT: JWT, identity field contains a JWT access token.
-                                 - IDENTITY_TYPE_MANUAL: Manual, propagates thw identity field as-is, without validation, into the input object.
-                              enum:
-                                - IDENTITY_TYPE_UNKNOWN
-                                - IDENTITY_TYPE_NONE
-                                - IDENTITY_TYPE_SUB
-                                - IDENTITY_TYPE_JWT
-                                - IDENTITY_TYPE_MANUAL
-                              default: IDENTITY_TYPE_UNKNOWN
-                    policy_context:
-                      ref: '#/components/schemas/apiPolicyContext'
-                      value:
-                        extensionprops: {}
-                        type: object
-                        properties:
-                          decisions:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: array
-                              title: list (1..N) of policy decisions (aka rules)
-                              items:
-                                ref: ""
-                                value:
-                                  extensionprops: {}
-                                  type: string
-                          path:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: string
-                              title: policy path aka package name
-                    policy_instance:
-                      ref: '#/components/schemas/apiPolicyInstance'
-                      value:
-                        extensionprops: {}
-                        type: object
-                        properties:
-                          instance_label:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: string
-                              title: label identifying the instance of the policy
-                          name:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: string
-                              title: policy name
-                    resource_context:
-                      ref: ""
-                      value:
-                        extensionprops: {}
-                        type: object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2IsRequest'
+        required: true
+        x-originalParamName: body
       responses:
         "200":
-          ref: ""
-          value:
-            extensionprops: {}
-            description: A successful response.
-            content:
-              application/json:
-                extensionprops: {}
-                schema:
-                  ref: '#/components/schemas/v2IsResponse'
-                  value:
-                    extensionprops: {}
-                    type: object
-                    properties:
-                      decisions:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: array
-                          items:
-                            ref: '#/components/schemas/v2Decision'
-                            value:
-                              extensionprops: {}
-                              type: object
-                              properties:
-                                decision:
-                                  ref: ""
-                                  value:
-                                    extensionprops: {}
-                                    type: string
-                                is:
-                                  ref: ""
-                                  value:
-                                    extensionprops: {}
-                                    type: boolean
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2IsResponse'
+          description: A successful response.
         default:
-          ref: ""
-          value:
-            extensionprops: {}
-            description: An unexpected error response.
-            content:
-              application/json:
-                extensionprops: {}
-                schema:
-                  ref: '#/components/schemas/rpcStatus'
-                  value:
-                    extensionprops: {}
-                    type: object
-                    properties:
-                      code:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: integer
-                          format: int32
-                      details:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: array
-                          items:
-                            ref: '#/components/schemas/protobufAny'
-                            value:
-                              extensionprops: {}
-                              type: object
-                              properties:
-                                '@type':
-                                  ref: ""
-                                  value:
-                                    extensionprops: {}
-                                    type: string
-                      message:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
       security:
         - AuthorizerAPIKey: []
           TenantID: []
-  /api/v2/authz/query:
-    extensionprops: {}
-    post:
-      extensionprops: {}
+      summary: Is (authorized)
       tags:
         - Authorizer
-      summary: Query
+  /api/v2/authz/query:
+    post:
       description: Executes a rego query on the loaded policy runtime.
       operationId: authorizer.query
       requestBody:
-        ref: ""
-        value:
-          extensionprops: {}
-          required: true
-          content:
-            application/json:
-              extensionprops: {}
-              schema:
-                ref: '#/components/schemas/v2QueryRequest'
-                value:
-                  extensionprops: {}
-                  type: object
-                  properties:
-                    identity_context:
-                      ref: '#/components/schemas/apiIdentityContext'
-                      value:
-                        extensionprops: {}
-                        type: object
-                        properties:
-                          identity:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: string
-                          type:
-                            ref: '#/components/schemas/apiIdentityType'
-                            value:
-                              extensionprops: {}
-                              type: string
-                              description: |-
-                                Identity types, describes the payload type of the identity field inside the IdentityContext message.
-
-                                 - IDENTITY_TYPE_UNKNOWN: Unknown, value not set, requests will fail with identity type not set error.
-                                 - IDENTITY_TYPE_NONE: None, no explicit identity context set, equals anonymous.
-                                 - IDENTITY_TYPE_SUB: Sub(ject), identity field contains an oAUTH subject.
-                                 - IDENTITY_TYPE_JWT: JWT, identity field contains a JWT access token.
-                                 - IDENTITY_TYPE_MANUAL: Manual, propagates thw identity field as-is, without validation, into the input object.
-                              enum:
-                                - IDENTITY_TYPE_UNKNOWN
-                                - IDENTITY_TYPE_NONE
-                                - IDENTITY_TYPE_SUB
-                                - IDENTITY_TYPE_JWT
-                                - IDENTITY_TYPE_MANUAL
-                              default: IDENTITY_TYPE_UNKNOWN
-                    input:
-                      ref: ""
-                      value:
-                        extensionprops: {}
-                        type: string
-                    options:
-                      ref: '#/components/schemas/v2QueryOptions'
-                      value:
-                        extensionprops: {}
-                        type: object
-                        properties:
-                          instrument:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: boolean
-                              title: default false
-                          metrics:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: boolean
-                              title: default false
-                          trace:
-                            ref: '#/components/schemas/v2TraceLevel'
-                            value:
-                              extensionprops: {}
-                              type: string
-                              title: |-
-                                - TRACE_LEVEL_UNKNOWN: Value not set.
-                                 - TRACE_LEVEL_OFF: ExplainOffV1   ExplainModeV1 = "off"
-                                 - TRACE_LEVEL_FULL: ExplainFullV1  ExplainModeV1 = "full"
-                                 - TRACE_LEVEL_NOTES: ExplainNotesV1 ExplainModeV1 = "notes"
-                                 - TRACE_LEVEL_FAILS: ExplainFailsV1 ExplainModeV1 = "fails"
-                              enum:
-                                - TRACE_LEVEL_UNKNOWN
-                                - TRACE_LEVEL_OFF
-                                - TRACE_LEVEL_FULL
-                                - TRACE_LEVEL_NOTES
-                                - TRACE_LEVEL_FAILS
-                              default: TRACE_LEVEL_UNKNOWN
-                          trace_summary:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: boolean
-                              title: default false
-                    policy_context:
-                      ref: '#/components/schemas/apiPolicyContext'
-                      value:
-                        extensionprops: {}
-                        type: object
-                        properties:
-                          decisions:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: array
-                              title: list (1..N) of policy decisions (aka rules)
-                              items:
-                                ref: ""
-                                value:
-                                  extensionprops: {}
-                                  type: string
-                          path:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: string
-                              title: policy path aka package name
-                    policy_instance:
-                      ref: '#/components/schemas/apiPolicyInstance'
-                      value:
-                        extensionprops: {}
-                        type: object
-                        properties:
-                          instance_label:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: string
-                              title: label identifying the instance of the policy
-                          name:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: string
-                              title: policy name
-                    query:
-                      ref: ""
-                      value:
-                        extensionprops: {}
-                        type: string
-                    resource_context:
-                      ref: ""
-                      value:
-                        extensionprops: {}
-                        type: object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2QueryRequest'
+        required: true
+        x-originalParamName: body
       responses:
         "200":
-          ref: ""
-          value:
-            extensionprops: {}
-            description: A successful response.
-            content:
-              application/json:
-                extensionprops: {}
-                schema:
-                  ref: '#/components/schemas/v2QueryResponse'
-                  value:
-                    extensionprops: {}
-                    type: object
-                    properties:
-                      metrics:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: object
-                      response:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: object
-                      trace:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: array
-                          items:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: object
-                      trace_summary:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: array
-                          items:
-                            ref: ""
-                            value:
-                              extensionprops: {}
-                              type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2QueryResponse'
+          description: A successful response.
         default:
-          ref: ""
-          value:
-            extensionprops: {}
-            description: An unexpected error response.
-            content:
-              application/json:
-                extensionprops: {}
-                schema:
-                  ref: '#/components/schemas/rpcStatus'
-                  value:
-                    extensionprops: {}
-                    type: object
-                    properties:
-                      code:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: integer
-                          format: int32
-                      details:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: array
-                          items:
-                            ref: '#/components/schemas/protobufAny'
-                            value:
-                              extensionprops: {}
-                              type: object
-                              properties:
-                                '@type':
-                                  ref: ""
-                                  value:
-                                    extensionprops: {}
-                                    type: string
-                      message:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
       security:
         - AuthorizerAPIKey: []
           TenantID: []
-  /api/v2/info:
-    extensionprops: {}
-    get:
-      extensionprops: {}
+      summary: Query
       tags:
-        - Info
-      summary: Info
+        - Authorizer
+  /api/v2/info:
+    get:
       description: Return version information.
       operationId: info.get
       responses:
         "200":
-          ref: ""
-          value:
-            extensionprops: {}
-            description: A successful response.
-            content:
-              application/json:
-                extensionprops: {}
-                schema:
-                  ref: '#/components/schemas/v2InfoResponse'
-                  value:
-                    extensionprops: {}
-                    type: object
-                    properties:
-                      arch:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: string
-                      commit:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: string
-                      date:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: string
-                      os:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: string
-                      version:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2InfoResponse'
+          description: A successful response.
         default:
-          ref: ""
-          value:
-            extensionprops: {}
-            description: An unexpected error response.
-            content:
-              application/json:
-                extensionprops: {}
-                schema:
-                  ref: '#/components/schemas/rpcStatus'
-                  value:
-                    extensionprops: {}
-                    type: object
-                    properties:
-                      code:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: integer
-                          format: int32
-                      details:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: array
-                          items:
-                            ref: '#/components/schemas/protobufAny'
-                            value:
-                              extensionprops: {}
-                              type: object
-                              properties:
-                                '@type':
-                                  ref: ""
-                                  value:
-                                    extensionprops: {}
-                                    type: string
-                      message:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
       security: []
-  /api/v2/policies:
-    extensionprops: {}
-    get:
-      extensionprops: {}
+      summary: Info
       tags:
-        - Policy
-      summary: List Policies
+        - Info
+  /api/v2/policies:
+    get:
       description: Lists the policy modules for the policy bundle.
       operationId: policies.list
       parameters:
-        - ref: ""
-          value:
-            extensionprops: {}
-            name: field_mask
-            in: query
-            schema:
-              ref: ""
-              value:
-                extensionprops: {}
-                type: string
-        - ref: ""
-          value:
-            extensionprops: {}
-            name: policy_instance.name
-            in: query
-            description: policy name
-            schema:
-              ref: ""
-              value:
-                extensionprops: {}
-                type: string
-        - ref: ""
-          value:
-            extensionprops: {}
-            name: policy_instance.instance_label
-            in: query
-            description: label identifying the instance of the policy
-            schema:
-              ref: ""
-              value:
-                extensionprops: {}
-                type: string
+        - in: query
+          name: field_mask
+          schema:
+            type: string
+        - description: policy name
+          in: query
+          name: policy_instance.name
+          schema:
+            type: string
+        - description: label identifying the instance of the policy
+          in: query
+          name: policy_instance.instance_label
+          schema:
+            type: string
       responses:
         "200":
-          ref: ""
-          value:
-            extensionprops: {}
-            description: A successful response.
-            content:
-              application/json:
-                extensionprops: {}
-                schema:
-                  ref: '#/components/schemas/v2ListPoliciesResponse'
-                  value:
-                    extensionprops: {}
-                    type: object
-                    properties:
-                      result:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: array
-                          items:
-                            ref: '#/components/schemas/apiModule'
-                            value:
-                              extensionprops: {}
-                              type: object
-                              properties:
-                                ast:
-                                  ref: ""
-                                  value:
-                                    extensionprops: {}
-                                id:
-                                  ref: ""
-                                  value:
-                                    extensionprops: {}
-                                    type: string
-                                package_path:
-                                  ref: ""
-                                  value:
-                                    extensionprops: {}
-                                    type: string
-                                package_root:
-                                  ref: ""
-                                  value:
-                                    extensionprops: {}
-                                    type: string
-                                raw:
-                                  ref: ""
-                                  value:
-                                    extensionprops: {}
-                                    type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2ListPoliciesResponse'
+          description: A successful response.
         default:
-          ref: ""
-          value:
-            extensionprops: {}
-            description: An unexpected error response.
-            content:
-              application/json:
-                extensionprops: {}
-                schema:
-                  ref: '#/components/schemas/rpcStatus'
-                  value:
-                    extensionprops: {}
-                    type: object
-                    properties:
-                      code:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: integer
-                          format: int32
-                      details:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: array
-                          items:
-                            ref: '#/components/schemas/protobufAny'
-                            value:
-                              extensionprops: {}
-                              type: object
-                              properties:
-                                '@type':
-                                  ref: ""
-                                  value:
-                                    extensionprops: {}
-                                    type: string
-                      message:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
       security:
         - AuthorizerAPIKey: []
           TenantID: []
-  /api/v2/policies/{id}:
-    extensionprops: {}
-    get:
-      extensionprops: {}
+      summary: List Policies
       tags:
         - Policy
-      summary: Get Policy
+  /api/v2/policies/{id}:
+    get:
       description: Gets the policy modules for the given module Id.
       operationId: policies.get
       parameters:
-        - ref: ""
-          value:
-            extensionprops: {}
-            name: id
-            in: path
-            required: true
-            schema:
-              ref: ""
-              value:
-                extensionprops: {}
-                type: string
-                pattern: '[^/]+/.+'
-        - ref: ""
-          value:
-            extensionprops: {}
-            name: field_mask
-            in: query
-            schema:
-              ref: ""
-              value:
-                extensionprops: {}
-                type: string
-        - ref: ""
-          value:
-            extensionprops: {}
-            name: policy_instance.name
-            in: query
-            description: policy name
-            schema:
-              ref: ""
-              value:
-                extensionprops: {}
-                type: string
-        - ref: ""
-          value:
-            extensionprops: {}
-            name: policy_instance.instance_label
-            in: query
-            description: label identifying the instance of the policy
-            schema:
-              ref: ""
-              value:
-                extensionprops: {}
-                type: string
+        - in: path
+          name: id
+          required: true
+          schema:
+            pattern: '[^/]+/.+'
+            type: string
+        - in: query
+          name: field_mask
+          schema:
+            type: string
+        - description: policy name
+          in: query
+          name: policy_instance.name
+          schema:
+            type: string
+        - description: label identifying the instance of the policy
+          in: query
+          name: policy_instance.instance_label
+          schema:
+            type: string
       responses:
         "200":
-          ref: ""
-          value:
-            extensionprops: {}
-            description: A successful response.
-            content:
-              application/json:
-                extensionprops: {}
-                schema:
-                  ref: '#/components/schemas/v2GetPolicyResponse'
-                  value:
-                    extensionprops: {}
-                    type: object
-                    properties:
-                      result:
-                        ref: '#/components/schemas/apiModule'
-                        value:
-                          extensionprops: {}
-                          type: object
-                          properties:
-                            ast:
-                              ref: ""
-                              value:
-                                extensionprops: {}
-                            id:
-                              ref: ""
-                              value:
-                                extensionprops: {}
-                                type: string
-                            package_path:
-                              ref: ""
-                              value:
-                                extensionprops: {}
-                                type: string
-                            package_root:
-                              ref: ""
-                              value:
-                                extensionprops: {}
-                                type: string
-                            raw:
-                              ref: ""
-                              value:
-                                extensionprops: {}
-                                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2GetPolicyResponse'
+          description: A successful response.
         default:
-          ref: ""
-          value:
-            extensionprops: {}
-            description: An unexpected error response.
-            content:
-              application/json:
-                extensionprops: {}
-                schema:
-                  ref: '#/components/schemas/rpcStatus'
-                  value:
-                    extensionprops: {}
-                    type: object
-                    properties:
-                      code:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: integer
-                          format: int32
-                      details:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: array
-                          items:
-                            ref: '#/components/schemas/protobufAny'
-                            value:
-                              extensionprops: {}
-                              type: object
-                              properties:
-                                '@type':
-                                  ref: ""
-                                  value:
-                                    extensionprops: {}
-                                    type: string
-                      message:
-                        ref: ""
-                        value:
-                          extensionprops: {}
-                          type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
       security:
         - AuthorizerAPIKey: []
           TenantID: []
+      summary: Get Policy
+      tags:
+        - Policy
 security:
   - AuthorizerAPIKey: []
     TenantID: []
 servers:
-  - extensionprops: {}
-    url: https://authorizer.prod.aserto.com
-    description: Hosted authorizer service
-  - extensionprops: {}
-    url: https://localhost:{port}
-    description: Local authorizer service using Topaz
-    variables:
-      port:
-        extensionprops: {}
-        enum:
-          - "8383"
-        default: "8383"
+  - description: Aserto Authorizer service
+    url: '{{.Scheme}}://{{.Host}}'
 tags:
-  - extensionprops: {}
-    name: Authorizer
-externalDocs:
-  extensionprops: {}
-  description: API documentation
-  url: https://docs.aserto.com
+  - name: Authorizer

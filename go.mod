@@ -1,12 +1,12 @@
 module github.com/aserto-dev/openapi-authorizer
 
-go 1.22.11
+go 1.23.0
 
-toolchain go1.23.2
+toolchain go1.24.2
 
 require (
 	github.com/magefile/mage v1.15.0
-	github.com/rs/zerolog v1.33.0
+	github.com/rs/zerolog v1.34.0
 )
 
 require (
