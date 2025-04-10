@@ -10,9 +10,8 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"slices"
 	"strings"
-	"unicode"
-	"unicode/utf8"
 
 	"github.com/aserto-dev/mage-loot/buf"
 	"github.com/aserto-dev/mage-loot/common"
@@ -67,14 +66,7 @@ func gen(bufImage, fileSources, version string) error {
 		return err
 	}
 
-	pathSeparator := string(os.PathListSeparator)
-	path := os.Getenv("PATH") +
-		pathSeparator +
-		filepath.Dir(deps.GoBinPath("protoc-gen-openapiv2"))
-
-	err = buf.RunWithEnv(map[string]string{
-		"PATH": path,
-	},
+	err = buf.Run(
 		buf.AddArg("generate"),
 		buf.AddArg("--template"),
 		buf.AddArg(filepath.Join("buf", "buf.gen.yaml")),
@@ -194,15 +186,15 @@ func mergeOpenAPI() error {
 	return nil
 }
 
+type Service struct {
+	input      string
+	config     string
+	jsonOutput string
+	yamlOutput string
+}
+
 // publish OpenAPI v3 specification file.
 func publishOpenAPIv3(version string) error {
-	type Service struct {
-		input      string
-		config     string
-		jsonOutput string
-		yamlOutput string
-	}
-
 	services := []Service{
 		{
 			input:      "service/authorizer/openapi.json",
@@ -213,107 +205,158 @@ func publishOpenAPIv3(version string) error {
 	}
 
 	for _, service := range services {
-
-		switch {
-		case !fileExists(service.input):
-			return errors.Errorf("input file not found (%s)\n", service.input)
-		case !fileExists(service.config):
-			return errors.Errorf("config file not found (%s)\n", service.config)
-		}
-
-		inputReader, err := os.Open(service.input)
-		if err != nil {
-			return errors.Wrapf(err, "open input file")
-		}
-
-		configReader, err := os.Open(service.config)
-		if err != nil {
-			return errors.Wrapf(err, "open config file")
-		}
-
-		fsutil.EnsureDir(filepath.Dir(service.jsonOutput))
-		jsonWriter, err := os.Create(service.jsonOutput)
-		if err != nil {
-			return errors.Wrapf(err, "create json output file")
-		}
-
-		fsutil.EnsureDir(filepath.Dir(service.jsonOutput))
-
-		var doc2 openapi2.T
-		dec := json.NewDecoder(inputReader)
-		if err := dec.Decode(&doc2); err != nil {
-			return errors.Wrapf(err, "decode input file")
-		}
-
-		var cfg openapi3.T
-		configDecoder := json.NewDecoder(configReader)
-		if err := configDecoder.Decode(&cfg); err != nil {
-			return errors.Wrapf(err, "decode config file")
-		}
-
-		spec3, err := openapi2conv.ToV3(&doc2)
-		if err != nil {
-			return errors.Wrapf(err, "convert input OpenAPI to v3")
-		}
-
-		spec3.Info = cfg.Info
-		spec3.Info.Version = version
-		spec3.Servers = cfg.Servers
-		spec3.ExternalDocs = cfg.ExternalDocs
-
-		const InternalAPI string = "INTERNAL_API"
-
-		for pathKey, path := range spec3.Paths {
-			for opKey, op := range spec3.Paths[pathKey].Operations() {
-				if contains(op.Tags, InternalAPI) {
-					resp := toLowerFirst(strings.Replace(op.OperationID, "_", "", 1)) + "Response"
-					fmt.Printf("remove component schema %s\n", resp)
-					delete(spec3.Components.Schemas, resp)
-
-					fmt.Printf("remove operation %s %s \n", opKey, pathKey)
-					path.SetOperation(opKey, nil)
-				}
-			}
-			if len(spec3.Paths[pathKey].Operations()) == 0 {
-				fmt.Printf("remove path %s\n", pathKey)
-				delete(spec3.Paths, pathKey)
-			}
-		}
-
-		if tenantSec, ok := spec3.Components.SecuritySchemes["TenantID"]; ok {
-			tenantSec.Value = &openapi3.SecurityScheme{
-				Type: "apiKey",
-				Name: "aserto-tenant-id",
-				In:   "header",
-			}
-			tenantSec.Value.Description = "Aserto Tenant ID"
-		}
-
-		if jwtSec, ok := spec3.Components.SecuritySchemes["JWT"]; ok {
-			jwtSec.Value = openapi3.NewJWTSecurityScheme()
-			jwtSec.Value.Description = "Aserto JWT token"
-		}
-
-		jsonEncoder := json.NewEncoder(jsonWriter)
-		jsonEncoder.SetIndent("", "  ")
-		if err := jsonEncoder.Encode(&spec3); err != nil {
-			return errors.Wrapf(err, "encode json output file")
-		}
-
-		yamlWriter, err := os.Create(service.yamlOutput)
-		if err != nil {
-			return errors.Wrapf(err, "create yaml output file")
-		}
-
-		yamlEncoder := yaml.NewEncoder(yamlWriter)
-		defer yamlEncoder.Close()
-		yamlEncoder.SetIndent(2)
-		if err := yamlEncoder.Encode(&spec3); err != nil {
-			return errors.Wrapf(err, "encode yaml output file")
+		if err := publishOpenAPIv3Service(service, version); err != nil {
+			return errors.Wrapf(err, "failed to publish service from [%s]", service.input)
 		}
 	}
 
 	return nil
+}
+
+func publishOpenAPIv3Service(service Service, version string) error {
+	switch {
+	case !fileExists(service.input):
+		return errors.Errorf("input file not found (%s)\n", service.input)
+	case !fileExists(service.config):
+		return errors.Errorf("config file not found (%s)\n", service.config)
+	}
+
+	var doc2 openapi2.T
+	if err := loadOpenAPI(service.input, &doc2); err != nil {
+		return errors.Wrapf(err, "load openapi v2 [%s]", service.input)
+	}
+
+	spec3, err := openapi2conv.ToV3(&doc2)
+	if err != nil {
+		return errors.Wrapf(err, "convert input OpenAPI to v3")
+	}
+
+	if err := applyConfigToSpec(spec3, service.config); err != nil {
+		return errors.Wrapf(err, "apply config [%s] to spec", service.config)
+	}
+
+	spec3.Info.Version = version
+
+	populateAsertoSecuritySchemes(spec3.Components.SecuritySchemes)
+
+	stripPathsWithTag(spec3.Paths, "INTERNAL_API")
+
+	if err := writeOpenAPI(spec3, service.jsonOutput); err != nil {
+		return errors.Wrapf(err, "write json output file [%s]", service.jsonOutput)
+	}
+
+	if err := writeOpenAPI(spec3, service.yamlOutput); err != nil {
+		return errors.Wrapf(err, "write yaml output file [%s]", service.yamlOutput)
+	}
+
+	return nil
+}
+
+type Decoder interface {
+	Decode(v any) error
+}
+
+type Encoder interface {
+	Encode(v any) error
+}
+
+func loadOpenAPI[T any](path string, doc T) error {
+	f, err := os.Open(path)
+	if err != nil {
+		return errors.Wrapf(err, "open openapi v3 file [%s]", path)
+	}
+	defer f.Close()
+
+	ext := filepath.Ext(path)
+
+	var decoder Decoder
+	switch ext {
+	case ".json":
+		decoder = json.NewDecoder(f)
+	case ".yaml", ".yml":
+		decoder = yaml.NewDecoder(f)
+	default:
+		return fmt.Errorf("unsupported file extension '%s' in [%s]", ext, path)
+	}
+
+	return decoder.Decode(&doc)
+}
+
+func writeOpenAPI(spec *openapi3.T, path string) error {
+	f, err := createFileAndDir(path)
+	if err != nil {
+		return errors.Wrapf(err, "create openapi v3 file [%s]", path)
+	}
+	defer f.Close()
+
+	ext := filepath.Ext(path)
+
+	var encoder Encoder
+	switch ext {
+	case ".json":
+		jsonEncoder := json.NewEncoder(f)
+		jsonEncoder.SetIndent("", "  ")
+		encoder = jsonEncoder
+	case ".yaml", ".yml":
+		yamlEncoder := yaml.NewEncoder(f)
+		yamlEncoder.SetIndent(2)
+		encoder = yamlEncoder
+	default:
+		return fmt.Errorf("unsupported file extension '%s' in [%s]", ext, path)
+	}
+
+	if err := encoder.Encode(spec); err != nil {
+		return errors.Wrapf(err, "encode openapi v3 file [%s]", path)
+	}
+
+	return nil
+}
+
+func applyConfigToSpec(spec *openapi3.T, configPath string) error {
+	var cfg openapi3.T
+	if err := loadOpenAPI(configPath, &cfg); err != nil {
+		return errors.Wrapf(err, "load config [%s]", configPath)
+	}
+
+	spec.Info = cfg.Info
+	spec.Servers = cfg.Servers
+	spec.ExternalDocs = cfg.ExternalDocs
+
+	return nil
+}
+
+func populateAsertoSecuritySchemes(schemes openapi3.SecuritySchemes) {
+	if tenantSec, ok := schemes["TenantID"]; ok {
+		tenantSec.Value = &openapi3.SecurityScheme{
+			Type: "apiKey",
+			Name: "aserto-tenant-id",
+			In:   "header",
+		}
+		tenantSec.Value.Description = "Aserto Tenant ID"
+	}
+
+	if jwtSec, ok := schemes["JWT"]; ok {
+		jwtSec.Value = openapi3.NewJWTSecurityScheme()
+		jwtSec.Value.Description = "Aserto JWT token"
+	}
+}
+
+func stripPathsWithTag(paths *openapi3.Paths, tag string) {
+	for path, def := range paths.Map() {
+		for opKey, op := range def.Operations() {
+			if slices.Contains(op.Tags, tag) {
+				def.SetOperation(opKey, nil)
+			}
+		}
+		if len(def.Operations()) == 0 {
+			paths.Delete(path)
+		}
+	}
+}
+
+func createFileAndDir(path string) (*os.File, error) {
+	fsutil.EnsureDir(filepath.Dir(path))
+	return os.Create(path)
 }
 
 func fileExists(filepath string) bool {
@@ -322,23 +365,6 @@ func fileExists(filepath string) bool {
 		return false
 	}
 	return !info.IsDir()
-}
-
-func contains(s []string, str string) bool {
-	for _, v := range s {
-		if v == str {
-			return true
-		}
-	}
-	return false
-}
-
-func toLowerFirst(s string) string {
-	if s == "" {
-		return ""
-	}
-	r, n := utf8.DecodeRuneInString(s)
-	return string(unicode.ToLower(r)) + s[n:]
 }
 
 // Removes generated files

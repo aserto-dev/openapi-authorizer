@@ -10,7 +10,6 @@ on:
   push:
     branches:
       - main
-      - v*
     # Publish `v1.2.3` tags as releases.
     tags:
       - v*
@@ -19,7 +18,9 @@ on:
 
 env:
   VAULT_ADDR: https://vault.eng.aserto.com/
-  GO_VERSION: "1.23"
+  GO_VERSION: 1.24
+  GO_LANGCI_LINT_VERSION: v2.0.2
+  GO_TESTSUM_VERSION: 1.12.1
 
 jobs:
   build:
@@ -33,7 +34,6 @@ jobs:
           url: ${{ env.VAULT_ADDR }}
           token: ${{ secrets.VAULT_TOKEN }}
           secrets: |
-            kv/data/github  "SSH_PRIVATE_KEY"     | SSH_PRIVATE_KEY;
             kv/data/github  "READ_WRITE_TOKEN"    | READ_WRITE_TOKEN;
       -
         uses: actions/create-github-app-token@v1
@@ -55,17 +55,6 @@ jobs:
       -
         name: Install dependencies
         run: |
-            mkdir -p $HOME/.ssh
-            umask 0077 && echo -e "${SSH_PRIVATE_KEY}" > $HOME/.ssh/id_rsa
-            ssh-keyscan github.com >> $HOME/.ssh/known_hosts
-
-            git config --global url."git@github.com:".insteadOf https://github.com/
-            git config --global user.email "github-bot@aserto.com"
-            git config --global user.name "Aserto Bot"
-
-            eval `ssh-agent`
-            ssh-add $HOME/.ssh/id_rsa
-
             go run mage.go deps
       -
         name: Clean generated code
@@ -73,6 +62,11 @@ jobs:
       -
         name: Generate
         run: go run mage.go generate
+      -
+        name: Lint
+        uses: golangci/golangci-lint-action@v7
+        with:
+          version: ${{ env.GO_LANGCI_LINT_VERSION }}
       -
         name: Commit changes
         id: commit_changes
@@ -116,4 +110,6 @@ jobs:
       - name: Publish to readme.io
         uses: readmeio/rdme@v8
         with:
-          rdme: openapi ./openapi.readmeio.json --key=${{ steps.vault.outputs.README_OAS_AUTHORIZER_KEY }} --id ${{ steps.vault.outputs.AUTHORIZER_API_DEFINITION_ID }}
+          rdme: >
+            openapi ./openapi.readmeio.json --key=${{ steps.vault.outputs.README_OAS_AUTHORIZER_KEY }}
+            --id ${{ steps.vault.outputs.AUTHORIZER_API_DEFINITION_ID }}
